@@ -1,5 +1,9 @@
+import unicodedata
+def strip_accents(s):
+    return unicodedata.normalize('NFKD',unicode(s,"UTF-8")).encode("ASCII","ignore")
+
 def MySplit(text):
-    return text.replace(',','').lower().split()
+    return strip_accents(text).replace(',.','').lower().split()
     
 def Count (tokens):
     count = {}
