@@ -48,7 +48,7 @@ def Quicksort(A):
     return A
 
 
-def InvertedIndex(lines,splitter):
+def SimpleInvertedIndex(lines,splitter):
     invertedIndex = {}
     for i in range(0, len(lines)):
         line = lines[i]
@@ -60,5 +60,27 @@ def InvertedIndex(lines,splitter):
             array =  invertedIndex[word]
             if i not in array:
                 array.append(i)
+    return invertedIndex
+
+
+
+
+def InvertedIndex(lines,splitter):
+    invertedIndex = {}
+    for i in range(0, len(lines)):
+        line = lines[i]
+        tokens = splitter(line)
+        for j in range(0,len(tokens)):
+            word = tokens[j]  
+            if word not in invertedIndex:
+                invertedIndex[word] = {}
+            obj =  invertedIndex[word]
+            
+            if i not in obj:
+                obj[i]=[]                
+
+            array = obj[i];
+            array.append(j)
+            
     return invertedIndex
 
