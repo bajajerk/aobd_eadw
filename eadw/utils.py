@@ -3,7 +3,11 @@ def strip_accents(s):
     return unicodedata.normalize('NFKD',unicode(s,"UTF-8")).encode("ASCII","ignore")
 
 def MySplit(text):
-    return strip_accents(text).replace(',.','').lower().split()
+    return strip_accents(text).replace(',','').replace('.','').replace('(','').replace(')','').lower().split()
+
+def MySplitAscii(text):
+    return text.replace(',','').replace('.','').replace('(','').replace(')','').lower().split()
+
     
 def Count (tokens):
     count = {}
@@ -39,4 +43,19 @@ def Quicksort(A):
 
     QuicksortAux(A, 0, len(A))
     return A
+
+
+def InvertedIndex(lines,splitter):
+    invertedIndex = {}
+    for i in range(0, len(lines)):
+        line = lines[i]
+        tokens = splitter(line)
+        for j in range(0,len(tokens)):
+            word = tokens[j]  
+            if word not in invertedIndex:
+                invertedIndex[word] = []
+            array =  invertedIndex[word]
+            if i not in array:
+                array.append(i)
+    return invertedIndex
 
