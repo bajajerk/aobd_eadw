@@ -87,3 +87,63 @@ def InvertedIndex(lines,splitter):
             
     return invertedIndex
 
+def DocumentFrequency(lines,splitter,*words):
+    result = {}
+    
+    for word in words:
+        result[word] = {}
+        
+    
+    for doc in range(0,len(lines)):
+        line = lines[doc]
+        tokens = splitter(line)
+    
+        for word in words:
+            result[word][doc] = 0
+            
+            for token in tokens:
+    
+                if token == word:
+                    result[word][doc] += 1
+    
+    
+    
+    
+            
+    return result
+
+
+def MinMaxDocumentFrequency(df):
+    result = {}
+    
+    for word in df.keys():
+        
+        
+        for doc in df[word].keys():
+            val = df[word][doc]
+            if word not in result.keys():
+                result[word]=[val,val]
+                
+            result[word][0] = min(result[word][0],val)
+            result[word][1] = max(result[word][1],val)
+            
+                
+            
+    return result
+
+
+
+def OverallFrequency(lines,words, splitter):
+    result = {}
+
+    for line in lines:
+        for word in words:
+            if word not in result:
+                result[word] = 0
+        
+            tokens = splitter(line)    
+            for token in tokens :
+                if token == word : 
+                    result[word] += 1
+                            
+    return result

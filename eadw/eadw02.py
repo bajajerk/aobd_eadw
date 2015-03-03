@@ -1,18 +1,27 @@
 # -*- coding: UTF-8 -*-
-from utils import InvertedIndex, Split, StripSymbols
+from utils import InvertedIndex, Split, DocumentFrequency,\
+    MinMaxDocumentFrequency
 
-file1 = open("lab02_documents.txt","r")
-lines1 = line = file1.readlines()
+file = open("lab02_documents.txt","r")
+lines = file.readlines()
+index = InvertedIndex(lines,Split)
+df = DocumentFrequency(lines,Split,*["with","the"])
 
 print "Exercise 1"
-x = InvertedIndex(lines1,Split)
-print x
-print x.keys()
-print x['we'].keys()
-print x['we'][83]
+print index
 
-print StripSymbols(u"olá, tudo fixe (porreiro)?,#fosga-se")
+print "Exercise 2"
+print "# documents = ", len(lines)
 
+total_terms = 0
+for word in index.keys():
+    for doc in index[word].keys():
+        total_terms += len(index[word][doc])
 
-import json
-print json.dumps(x,sort_keys=True, indent=4)
+print "# terms = ", total_terms
+
+print "# individual terms = ", len(index.keys())
+
+print "df = ", df
+
+print "min_max = ", MinMaxDocumentFrequency(df)
