@@ -3,7 +3,7 @@ def strip_accents(s):
     return unicodedata.normalize('NFKD',unicode(s,"UTF-8")).encode("ASCII","ignore")
 
 def Replace(text):
-    return text.replace(',','').replace('/','').replace('.','').replace('(','').replace(')','').replace('[','').replace(']','');
+    return text.replace(',','').replace('/','').replace('.','').replace('"','').replace('\'','').replace('(','').replace(')','').replace('[','').replace(']','');
 
 def Split(text):
     return strip_accents(Replace(text)).lower().split()
