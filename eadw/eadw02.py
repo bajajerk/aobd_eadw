@@ -11,6 +11,8 @@ print x.keys()
 print x['we'].keys()
 print x['we'][83]
 
-stri = u"olá, tudo fixe (lol)?"
+print StripSymbols(u"olá, tudo fixe (porreiro)?,#fosga-se")
 
-print StripSymbols(stri)
+
+import json
+print json.dumps(x,sort_keys=True, indent=4)

@@ -1,4 +1,5 @@
 import unicodedata
+import re
 
 def StripSymbols(text):
     if isinstance(text, unicode):
@@ -6,7 +7,13 @@ def StripSymbols(text):
     else:
         text = unicodedata.normalize('NFKD',unicode(text,"UTF-8")).encode("ASCII","ignore")
     
-    return ''.join(c for c in text if c.isalnum() or c.isspace());
+    res = []
+    for c in text:
+        if c.isalnum() or c.isspace() :
+            res.append(c)
+        else:
+            res.append(' ')
+    return re.sub(' +',' ',''.join(res))
 
 def Split(text):
     return StripSymbols(text).lower().split()
