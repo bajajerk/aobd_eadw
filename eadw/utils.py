@@ -1,16 +1,15 @@
 import unicodedata
-def strip_accents(s):
-    return unicodedata.normalize('NFKD',unicode(s,"UTF-8")).encode("ASCII","ignore")
 
-def Replace(text):
-    return text.replace(',','').replace('/','').replace('.','').replace('"','').replace('\'','').replace('(','').replace(')','').replace('[','').replace(']','');
+def StripSymbols(text):
+    if isinstance(text, unicode):
+        text = unicodedata.normalize('NFKD',text).encode("ASCII","ignore")
+    else:
+        text = unicodedata.normalize('NFKD',unicode(text,"UTF-8")).encode("ASCII","ignore")
+    
+    return ''.join(c for c in text if c.isalnum() or c.isspace());
 
 def Split(text):
-    return strip_accents(Replace(text)).lower().split()
-
-def SplitAscii(text):
-    return Replace(text).lower().split()
-
+    return StripSymbols(text).lower().split()
     
 def Count (tokens):
     count = {}
@@ -61,9 +60,6 @@ def SimpleInvertedIndex(lines,splitter):
             if i not in array:
                 array.append(i)
     return invertedIndex
-
-
-
 
 def InvertedIndex(lines,splitter):
     invertedIndex = {}
