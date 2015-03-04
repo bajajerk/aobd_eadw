@@ -1,5 +1,6 @@
 import unicodedata
 import re
+from math import log
 
 def StripSymbols(text):
     if isinstance(text, unicode):
@@ -13,23 +14,23 @@ def StripSymbols(text):
             res.append(c)
         else:
             res.append(' ')
+            
+            
     return re.sub(' +',' ',''.join(res))
 
 def Split(text):
     return StripSymbols(text).lower().split()
     
 def Count (tokens):
-    count = {}
-    for i in range(0, len(tokens)):
-        key = tokens[i]
-        if key not in count:
-            count[key] = 0
-        count[key] = count[key] +1
-    return count
+    result = {}
+    for token in tokens:
+        if token not in result:
+            result[token] = 0
+        result[token] += 1
+    return result
 
 def Intersection(tokens1,tokens2):
     return [val for val in tokens1 if val in tokens2]
-
 
 def Quicksort(A):
 
@@ -80,57 +81,48 @@ def InvertedIndex(lines,splitter):
             obj =  invertedIndex[word]
             
             if i not in obj:
-                obj[i]=[]                
+                obj[i]=0             
 
-            array = obj[i];
-            array.append(j)
+            obj[i] +=1;
             
     return invertedIndex
 
-def DocumentFrequency(lines,splitter,*words):
+    
+    
+
+def DocumentFrequency(index,*words):
+    result = {}    
+    for word in words:
+        result[word] = len(index[word]) if word in index.keys() else 0
+            
+    return result
+
+
+
+def InverseDocumentFrequency(index,n,*words):
     result = {}
     
     for word in words:
-        result[word] = {}
-        
-    
-    for doc in range(0,len(lines)):
-        line = lines[doc]
-        tokens = splitter(line)
-    
-        for word in words:
-            result[word][doc] = 0
-            
-            for token in tokens:
-    
-                if token == word:
-                    result[word][doc] += 1
+        result[word] = log(float(n)/len(index[word])) if word in index.keys() else None
     
     
-    
-    
-            
     return result
 
-
-def MinMaxDocumentFrequency(df):
+def MinMaxDocumentFrequency(index,*words):
     result = {}
     
-    for word in df.keys():
+    for word in words:
+        result[word] = None
         
-        
-        for doc in df[word].keys():
-            val = df[word][doc]
-            if word not in result.keys():
-                result[word]=[val,val]
-                
-            result[word][0] = min(result[word][0],val)
-            result[word][1] = max(result[word][1],val)
-            
-                
+        if word in index.keys():
+            for doc in index[word]:
+                val = index[word][doc]
+                if result[word] is None:
+                    result[word] = [val,val]
+                result[word][0] = min(result[word][0],val)
+                result[word][1] = max(result[word][1],val)
             
     return result
-
 
 
 def OverallFrequency(lines,words, splitter):
