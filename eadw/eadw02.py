@@ -3,9 +3,9 @@ from utils import InvertedIndex, Split, DocumentFrequency, \
     MinMaxDocumentFrequency, InverseDocumentFrequency
 
 
-file = open("lab02_documents.txt","r")
-lines = file.readlines()
-file.close()
+file1 = open("lab02_documents.txt","r")
+lines = file1.readlines()
+file1.close()
 index = InvertedIndex(lines,Split)
 df = DocumentFrequency(index,"with","the","lol","amorphous")
 idf = InverseDocumentFrequency(index,len(lines),"with","the","lol","amorphous")
