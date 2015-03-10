@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from utils import InvertedIndex, Split, DocumentFrequency, \
-    MinMaxDocumentFrequency, InverseDocumentFrequency, DotProduct
+    MinMaxDocumentFrequency, InverseDocumentFrequency, DotProduct, SortByValue
 
 
 file1 = open("lab02_documents.txt","r")
@@ -34,3 +34,6 @@ print "idf = ", InverseDocumentFrequency(index,len(lines),"with")
 print "Exercise 3"
 dot = DotProduct(index,len(lines),"with","the","lol","amorphous")
 print dot
+
+print "Exercise 4"
+print SortByValue(dot)

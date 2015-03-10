@@ -1,6 +1,8 @@
 import unicodedata
 import re
 from math import log
+import operator
+
 
 def StripSymbols(text):
     if isinstance(text, unicode):
@@ -54,7 +56,6 @@ def Quicksort(A):
     QuicksortAux(A, 0, len(A))
     return A
 
-
 def SimpleInvertedIndex(lines,splitter):
     invertedIndex = {}
     for i in range(0, len(lines)):
@@ -87,17 +88,12 @@ def InvertedIndex(lines,splitter):
             
     return invertedIndex
 
-    
-    
-
 def DocumentFrequency(index,*words):
     result = {}    
     for word in words:
         result[word] = len(index[word]) if word in index.keys() else 0
             
     return result
-
-
 
 def InverseDocumentFrequency(index,n,word):
     return log(float(n)/len(index[word])) if word in index.keys() else None
@@ -118,7 +114,6 @@ def MinMaxDocumentFrequency(index,*words):
             
     return result
 
-
 def OverallFrequency(lines,words, splitter):
     result = {}
 
@@ -131,9 +126,10 @@ def OverallFrequency(lines,words, splitter):
             for token in tokens :
                 if token == word : 
                     result[word] += 1
-                            
     return result
 
+def SortByValue(obj):
+    return sorted(obj.items(), key=operator.itemgetter(1))
 
 def DotProduct(index,n,*terms):
     a = {}
@@ -141,12 +137,9 @@ def DotProduct(index,n,*terms):
         if term in index.keys():
             It = index[term]
             idft = InverseDocumentFrequency(index,n,term)
-            print idft
             for pair in It:
                 tfdt = It[pair]
                 if pair not in a:
                     a[pair] = 0
                 a[pair] += tfdt*idft
-                    
-            
     return a    
