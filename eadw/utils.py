@@ -99,14 +99,8 @@ def DocumentFrequency(index,*words):
 
 
 
-def InverseDocumentFrequency(index,n,*words):
-    result = {}
-    
-    for word in words:
-        result[word] = log(float(n)/len(index[word])) if word in index.keys() else None
-    
-    
-    return result
+def InverseDocumentFrequency(index,n,word):
+    return log(float(n)/len(index[word])) if word in index.keys() else None
 
 def MinMaxDocumentFrequency(index,*words):
     result = {}
@@ -139,3 +133,20 @@ def OverallFrequency(lines,words, splitter):
                     result[word] += 1
                             
     return result
+
+
+def DotProduct(index,n,*terms):
+    a = {}
+    for term in terms:
+        if term in index.keys():
+            It = index[term]
+            idft = InverseDocumentFrequency(index,n,term)
+            print idft
+            for pair in It:
+                tfdt = It[pair]
+                if pair not in a:
+                    a[pair] = 0
+                a[pair] += tfdt*idft
+                    
+            
+    return a    

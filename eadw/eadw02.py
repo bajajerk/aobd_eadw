@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from utils import InvertedIndex, Split, DocumentFrequency, \
-    MinMaxDocumentFrequency, InverseDocumentFrequency
+    MinMaxDocumentFrequency, InverseDocumentFrequency, DotProduct
 
 
 file1 = open("lab02_documents.txt","r")
@@ -8,7 +8,6 @@ lines = file1.readlines()
 file1.close()
 index = InvertedIndex(lines,Split)
 df = DocumentFrequency(index,"with","the","lol","amorphous")
-idf = InverseDocumentFrequency(index,len(lines),"with","the","lol","amorphous")
 
 print "Exercise 1"
 print index
@@ -29,4 +28,9 @@ print "df = ", df
 
 print "min_max = ", MinMaxDocumentFrequency(index,"with","the","lol","amorphous")
 
-print "idf = ", idf
+print "idf = ", InverseDocumentFrequency(index,len(lines),"with")
+
+
+print "Exercise 3"
+dot = DotProduct(index,len(lines),"with","the","lol","amorphous")
+print dot
