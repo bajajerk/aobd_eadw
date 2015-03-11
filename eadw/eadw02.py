@@ -45,6 +45,12 @@ dot = DotProduct(index,len(lines),*args)
 print dot
 
 print "Exercise 4"
-print SortByValue(dot)
+
+while 1:
+    word = raw_input("search: ")
+    dot = DotProduct(index,len(lines),*Split(word))
+    result = SortByValue(dot)
+    result.reverse()
+    print result
 
 

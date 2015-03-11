@@ -75,8 +75,7 @@ def InvertedIndex(lines,splitter):
     for i in range(0, len(lines)):
         line = lines[i]
         tokens = splitter(line)
-        for j in range(0,len(tokens)):
-            word = tokens[j]  
+        for word in tokens:  
             if word not in invertedIndex:
                 invertedIndex[word] = {}
             obj =  invertedIndex[word]
@@ -103,14 +102,9 @@ def MinMaxDocumentFrequency(index,*words):
     
     for word in words:
         result[word] = None
-        
         if word in index.keys():
-            for doc in index[word]:
-                val = index[word][doc]
-                if result[word] is None:
-                    result[word] = [val,val]
-                result[word][0] = min(result[word][0],val)
-                result[word][1] = max(result[word][1],val)
+            values = index[word].values()
+            result[word] = [min(values),max(values)]    
             
     return result
 
@@ -137,9 +131,9 @@ def DotProduct(index,n,*terms):
         if term in index.keys():
             It = index[term]
             idft = InverseDocumentFrequency(index,n,term)
-            for pair in It:
-                tfdt = It[pair]
-                if pair not in a:
-                    a[pair] = 0
-                a[pair] += tfdt*idft
+            for doc in It:
+                tfdt = It[doc]
+                if doc not in a:
+                    a[doc] = 0
+                a[doc] += tfdt*idft
     return a    
