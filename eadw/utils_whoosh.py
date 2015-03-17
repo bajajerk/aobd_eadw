@@ -1,10 +1,41 @@
-from whoosh.index import open_dir
+from whoosh import scoring
+from whoosh.analysis.analyzers import SimpleAnalyzer
+from whoosh.analysis.filters import LowercaseFilter, StopFilter
+from whoosh.analysis.tokenizers import SpaceSeparatedTokenizer
+from whoosh.fields import NUMERIC, TEXT, Schema
+from whoosh.index import open_dir, create_in
 from whoosh.qparser.default import QueryParser
 from whoosh.qparser.syntax import OrGroup
 
 
-def search(index,query,lim):
-    index = open_dir("indexdir")
+def index(dir,lines):
+    schema = Schema(id = NUMERIC(stored=True), content=TEXT)
+    ix = create_in(dir, schema)
+    writer = ix.writer()
+    for line in lines:
+        
+        partition = line.split(' ',1)
+        i = int(partition[0])
+        c = partition[1]
+        writer.add_document(id=i,content=unicode(c,"UTF-8"))
+    writer.commit()
+    return ix
+
+def indexNoStopWords(dir,lines):
+    schema = Schema(id = NUMERIC(stored=True), content=TEXT)
+    ix = create_in(dir, schema)
+    writer = ix.writer()
+    for line in lines:
+        
+        partition = line.split(' ',1)
+        i = int(partition[0])
+        c = partition[1]
+        writer.add_document(id=i,content=unicode(stop(unicode(c,"UTF-8")),"UTF-8" ))
+    writer.commit()
+    return ix
+
+def searchBM25(dir,index,query,lim):
+    index = open_dir(dir)
     
     res = []
     
@@ -17,6 +48,20 @@ def search(index,query,lim):
         
     return res
 
+
+def searchCOS(dir,index,query,lim):
+    index = open_dir(dir)
+    
+    res = []
+    
+    with index.searcher(weighting=scoring.TF_IDF()) as searcher:
+        query = QueryParser("content", index.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
+        results = searcher.search(query, limit=lim)
+        for r in results:
+            res.append(r["id"])
+        
+        
+    return res
 
 def precision(result,expected):
     intersection = [val for val in result if val in expected]
@@ -41,3 +86,15 @@ def score(result,expected):
         F1=(2*Re*Pr)/(Re+Pr)
         return {"Pr":Pr,"Re":Re,"F1":F1}
     return {"Pr":0,"Re":0,"F1":0}
+
+
+
+def stop(text):
+    stopper = StopFilter()
+    tokenizer = SimpleAnalyzer()
+    tokens = tokenizer(text)
+
+    result = []
+    for token in stopper(tokens):
+        result.append(repr(token.text))
+    return ' '.join(result)
