@@ -76,7 +76,8 @@ feeds =['http://feeds.dn.pt/DN-Portugal',
         'http://expresso.sapo.pt/static/rss/optimus-alive_25585.xml',
         'http://expresso.sapo.pt/static/rss/quero-estudar-melhor_25593.xml',
         'http://expresso.sapo.pt/static/rss/mes-do-ambiente-do-expresso-2014_25751.xml',
-        'http://expresso.sapo.pt/manchetes_feed.rss'
+        'http://expresso.sapo.pt/manchetes_feed.rss',
+        'http://feeds.destak.pt/DestakRSS'
         ]
 
 
