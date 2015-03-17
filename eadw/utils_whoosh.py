@@ -20,11 +20,14 @@ def search(index,query):
 
 def precision(result,expected):
     intersection = [val for val in result if val in expected]
-    print intersection
     return float(len(intersection))/len(result)
 
 
 def recall(result,expected):
     intersection = [val for val in result if val in expected]
-    print intersection
     return float(len(intersection))/len(expected)
+
+def f1(result,expected):
+    Pr=precision(result, expected)
+    Re=recall(result, expected)
+    return (2*Re*Pr)/(Re+Pr)
