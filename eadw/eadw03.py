@@ -37,11 +37,23 @@ print "Re = ", recall(result,[664,276,1])
 print "F1 = ", f1(result,[664,276,1])
 
 print "Exercise 4"
+average = {"Pr":0,"Re":0,"F1":0}
 for i in range(0,len(lines2)/2):
     text = lines2[i*2+0];
     number_strings = lines2[i*2+1].split();
     expected = [int(el) for el in number_strings]
-    search2 = search(ix,text,100)
-    print score(search2,expected)
+    result2 = search(ix,text,100)
+    score2 = score(result2,expected)
+    score2["query"]=text
+    average["Pr"]+=score2["Pr"]
+    average["Re"]+=score2["Re"]
+    average["F1"]+=score2["F1"]
+    print score2
+
+average["Pr"]/=len(lines2)/2
+average["Re"]/=len(lines2)/2
+average["F1"]/=len(lines2)/2
+print "Avg = ",average
 
 
+print "Exercise 5"
