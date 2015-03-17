@@ -3,6 +3,8 @@ from whoosh.index import create_in
 from whoosh.index import open_dir
 from whoosh.qparser import *
 
+from utils_whoosh import search
+
 
 file1 = open("aula03_cfc.txt","r")
 lines = file1.readlines()
@@ -23,14 +25,5 @@ writer.commit()
 
 print "Exercise 2"
 
-def search(query):
-    ix = open_dir("indexdir")
-    
-    with ix.searcher() as searcher:
-        query = QueryParser("content", ix.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
-        results = searcher.search(query, limit=100)
-        for r in results:
-            print r
-        print "Number of results:", results.scored_length()
-        
-search("first document")
+
+print search(ix,"first document")
