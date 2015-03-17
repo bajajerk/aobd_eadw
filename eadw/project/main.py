@@ -1,3 +1,10 @@
+import re
+import urllib2
+
+from bs4 import BeautifulSoup, CData
+import pymongo
+
+
 feeds =['http://feeds.dn.pt/DN-Portugal',
         'http://feeds.dn.pt/DN-Globo',
         'http://feeds.dn.pt/DN-Economia',
@@ -40,7 +47,15 @@ feeds =['http://feeds.dn.pt/DN-Portugal',
 print feeds
 
 
-import urllib2
-response = urllib2.urlopen(feeds[0])
-html = response.read()
-print html
+for feed in feeds:
+    try:
+        response = urllib2.urlopen(feed)
+        
+        rss = response.read()
+        soup = BeautifulSoup(rss, "xml")
+        soup.prettify()
+        for tag in soup.findAll('title'):
+            print tag.string.strip()
+    except urllib2.URLError, e:
+        print feed, " | ", e
+
