@@ -28,5 +28,5 @@ result = search(ix,"first document")
 print result
 
 print "Exercise 3"
-print "Pr = ", precision(result,['00664','00276'])
-print "Re = ", recall(result,['00664','00276'])
+print "Pr = ", precision(result,['00664','00276','00001'])
+print "Re = ", recall(result,['00664','00276','00001'])
