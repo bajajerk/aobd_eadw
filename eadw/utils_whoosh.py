@@ -14,4 +14,15 @@ def search(index,query):
         for r in results:
             res.append(r["id"])
         
+        
     return res
+
+
+def precision(result,expected):
+    intersection = [val for val in result if val in expected]
+    return len(intersection)/len(result)
+
+
+def recall(result,expected):
+    intersection = [val for val in result if val in expected]
+    return len(intersection)/len(expected)

@@ -3,7 +3,7 @@ from whoosh.index import create_in
 from whoosh.index import open_dir
 from whoosh.qparser import *
 
-from utils_whoosh import search
+from utils_whoosh import search, precision, recall
 
 
 file1 = open("aula03_cfc.txt","r")
@@ -24,6 +24,9 @@ writer.commit()
 
 
 print "Exercise 2"
+result = search(ix,"first document")
+print result
 
-
-print search(ix,"first document")
+print "Exercise 3"
+print "Pr = ", precision(result,['00664','00276'])
+print "Re = ", recall(result,['00664','00276'])
