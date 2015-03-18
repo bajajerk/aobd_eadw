@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 file = open("feeds.txt","r")
 feeds = file.read().splitlines()
-   
+file.close()
 print feeds
     
 
