@@ -1,7 +1,8 @@
 import re
 import urllib2
 
-from bs4 import BeautifulSoup, CData
+from bs4 import BeautifulSoup
+
 import pymongo
 
 
