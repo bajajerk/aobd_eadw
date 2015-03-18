@@ -1,0 +1,5 @@
+*.log
+*.pyc
+MAIN_WRITELOCK
+*.toc
+*.seg
