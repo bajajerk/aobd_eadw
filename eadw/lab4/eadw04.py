@@ -1,8 +1,23 @@
+from utils import PageRank, PageRankAuto
 
 
-
-
+file1 = open("aula04_links.txt","r")
+lines1 = file1.readlines()
 
 
 print "Exercise 1"
-#ver o PageRank dos utils.
+dictionary1 = {1: [3], 2: [1, 3], 3: [1, 2]}
+print PageRank(dictionary1,5000,0.2)
+
+print "Exercise 2"
+dictionary2 = {}
+for line in lines1:
+    splits = line.split()
+    doc = splits[0]
+    dictionary2[doc] = []
+    for i in xrange(1,len(splits)):
+        dictionary2[doc].append(splits[i])
+    
+print PageRankAuto(dictionary2,0.15)
+
+print "Exercise 3"

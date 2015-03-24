@@ -2,6 +2,7 @@ import unicodedata
 import re
 from math import log
 import operator
+from _dbus_bindings import Dictionary
 
 
 def StripSymbols(text):
@@ -139,38 +140,73 @@ def DotProduct(index,n,*terms):
                 a[doc] += tfdt*idft
     return a 
 
+               
+
    
-def PageRank(dictionary, iterations, dampingFactor):
-    
-    Matrix = [[0 for x in xrange(len(dictionary))] for x in xrange(len(dictionary))] 
-    prestige = [1 for x in xrange(len(dictionary))]
-    
-    #o aux existe porque e necessario fazer reset ao prestige por cada interaçao????
-    aux = [0 for x in xrange(len(dictionary))]
-    
-    
-    #coloca a 1, a posição adjacente de cada valor de cada documento.
-    
-    for doc in dictionary:
-        for value in dictionary[doc]:
-            Matrix[int(value) - 1][int(value) - 1] = 1
-            
-    
-    #o doc_num é o len do dictionary
-    #for it in xrange(iterations):
-    #    for i in xrange(doc_num):
-    #        for ii in xrange(doc_num):
-    #            aux[i] += (damping_factor / doc_num) + (1 - damping_factor) *(float(prestige[ii])/outDegree(Matrix[ii]))*Matrix[ii][i]
+def IteratePageRank(dictionary, oldPrestige, d):
+    prestige = {}
 
-    #    prestige = aux
-    #    aux = [0 for x in xrange(doc_num)]
+    N = len(dictionary);
+
+    for v in dictionary.keys():
+        temp_sum = 0      
+        for u in dictionary.keys():
+            Nu = len(dictionary[u]) 
+            if Nu > 0 :       
+                if v in dictionary[u]:
+                    piu = oldPrestige[u]
+                    temp_sum += piu/Nu
+                
         
+        prestige[v] = (d / N) + (1 - d) *temp_sum
+    return prestige
+
+
+def PageRank(dictionary, iterations, d):
+    prestige = {}
+    for doc in dictionary.keys():
+        prestige[doc]=0
     
+
+    for it in xrange(iterations):
+        prestige = IteratePageRank(dictionary, prestige, d)
+
+    return prestige
+
+def CalcVar(dictionary,prestige):
+    n = len(dictionary)
+    x_bar = sum(prestige.values())/n
+    temp_sum = 0
+    for x_i in prestige.values():
+        temp_sum += (x_i-x_bar)*(x_i-x_bar)
     
-    
+    return temp_sum/(n-1)
     
 
 
+def PageRankAuto(dictionary, d):
+    n = len(dictionary)
+    treshold = 1/float(n*n)
+    iters = 0
+    prestige = {}
+    for doc in dictionary.keys():
+        prestige[doc]=0
+    
+    oldVar =0 
 
+    while True:
+        iters +=1
+        prestige = IteratePageRank(dictionary, prestige, d)
+        newVar = CalcVar(dictionary, prestige)
+    
+        ratio = abs(oldVar - newVar)/(oldVar + newVar)
+        
+        if ratio < treshold:
+            break
+        
+        oldVar = newVar
+        
+    print "iters = ",iters
 
+    return prestige
 
