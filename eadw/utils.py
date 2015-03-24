@@ -126,6 +126,7 @@ def SortByValue(obj):
     return sorted(obj.items(), key=operator.itemgetter(1))
 
 def DotProduct(index,n,*terms):
+
     a = {}
     for term in terms:
         if term in index.keys():
@@ -136,4 +137,40 @@ def DotProduct(index,n,*terms):
                 if doc not in a:
                     a[doc] = 0
                 a[doc] += tfdt*idft
-    return a    
+    return a 
+
+   
+def PageRank(dictionary, iterations, dampingFactor):
+    
+    Matrix = [[0 for x in xrange(len(dictionary))] for x in xrange(len(dictionary))] 
+    prestige = [1 for x in xrange(len(dictionary))]
+    
+    #o aux existe porque e necessario fazer reset ao prestige por cada interaçao????
+    aux = [0 for x in xrange(len(dictionary))]
+    
+    
+    #coloca a 1, a posição adjacente de cada valor de cada documento.
+    
+    for doc in dictionary:
+        for value in dictionary[doc]:
+            Matrix[int(value) - 1][int(value) - 1] = 1
+            
+    
+    #o doc_num é o len do dictionary
+    #for it in xrange(iterations):
+    #    for i in xrange(doc_num):
+    #        for ii in xrange(doc_num):
+    #            aux[i] += (damping_factor / doc_num) + (1 - damping_factor) *(float(prestige[ii])/outDegree(Matrix[ii]))*Matrix[ii][i]
+
+    #    prestige = aux
+    #    aux = [0 for x in xrange(doc_num)]
+        
+    
+    
+    
+    
+
+
+
+
+
