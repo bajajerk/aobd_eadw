@@ -1,4 +1,5 @@
 from utils import PageRank, PageRankAuto
+from utils_whoosh import index, searchPageRank
 
 
 file1 = open("aula04_links.txt","r")
@@ -18,6 +19,14 @@ for line in lines1:
     for i in xrange(1,len(splits)):
         dictionary2[doc].append(splits[i])
     
-print PageRankAuto(dictionary2,0.15)
+rank = PageRankAuto(dictionary2,0.15)
+print rank
 
 print "Exercise 3"
+file2 = open("../lab3/aula03_cfc.txt","r")
+lines2 = file2.readlines()
+ix = index("indexl4",lines2)
+
+result = searchPageRank("indexl4",ix,"first document",100,rank)
+
+print result

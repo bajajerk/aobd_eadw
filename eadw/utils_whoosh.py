@@ -17,6 +17,9 @@ def index(dir,lines):
         partition = line.split(' ',1)
         i = int(partition[0])
         c = partition[1]
+
+        
+        
         writer.add_document(id=i,content=unicode(c,"UTF-8"))
     writer.commit()
     return ix
@@ -98,3 +101,44 @@ def stop(text):
     for token in stopper(tokens):
         result.append(repr(token.text))
     return ' '.join(result)
+
+
+
+
+
+
+def searchPageRank(dir,index,query,lim,rank):
+    index = open_dir(dir)
+    
+    class PageRankScorer(scoring.BaseScorer):
+        def __init__(self, idf):
+            self.idf = idf
+    
+        def score(self, matcher):
+            doc = str(matcher.id()+1)
+            
+            r = 0
+            if doc in rank.keys():
+                r = rank[doc]
+            s = matcher.weight() * self.idf* r
+            
+            print doc," | ", s
+            return s
+        
+
+    class pageRankWeight(scoring.WeightingModel):
+        def scorer(self, searcher, fieldname, text, qf=1):
+            # IDF is a global statistic, so get it from the top-level searcher
+            parent = searcher.get_parent()  # Returns self if no parent
+            idf = parent.idf(fieldname, text)
+            return PageRankScorer(idf)
+    
+    res = []   
+    with index.searcher(weighting=pageRankWeight()) as searcher:
+        query = QueryParser("content", index.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
+        results = searcher.search(query, limit=lim)
+        for r in results:
+            res.append(r["id"])
+        
+        
+    return res
