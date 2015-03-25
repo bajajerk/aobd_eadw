@@ -122,7 +122,7 @@ def searchPageRank(dir,index,query,lim,rank):
                 r = rank[doc]
             s = matcher.weight() * self.idf* r
             
-            print doc," | ", s
+          #  print doc," | ", s
             return s
         
 
