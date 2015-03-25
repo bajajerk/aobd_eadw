@@ -2,7 +2,6 @@ import unicodedata
 import re
 from math import log
 import operator
-from _dbus_bindings import Dictionary
 
 
 def StripSymbols(text):
