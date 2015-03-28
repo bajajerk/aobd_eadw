@@ -7,6 +7,16 @@ feeds = file.read().splitlines()
 file.close()
 print feeds
     
+import pymongo
+from pymongo import MongoClient
+
+client = MongoClient('localhost', 27017)
+db = client['eadw_proj']
+if db['news'] is None:
+    db['news'] = db.CreateCollection("news")
+news = db['news']
+
+    
 
 for feed in feeds:
     try:
@@ -15,8 +25,23 @@ for feed in feeds:
         rss = response.read()
         soup = BeautifulSoup(rss, "xml")
         soup.prettify()
-        for tag in soup.findAll('title'):
-            print tag.string.strip()
+        for item in soup.findAll('item'):
+            date = item.findAll('pubDate')[0].string.strip();
+       
+            title = item.findAll('title')[0].string.strip();
+            description = item.findAll('description')[0].string.strip();
+            link = item.findAll('link')[0].string.strip();
+            
+
+            obj = news.find_one({"l":link})
+            if not obj:
+                news.insert({"t":title,"d":description,"l":link,"p":date})
+
+
+       
+            print "*"
+
+
     except urllib2.URLError, e:
         print feed, " | ", e
 
