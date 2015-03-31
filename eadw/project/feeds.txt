@@ -70,4 +70,15 @@ http://expresso.sapo.pt/static/rss/optimus-alive_25585.xml
 http://expresso.sapo.pt/static/rss/quero-estudar-melhor_25593.xml
 http://expresso.sapo.pt/static/rss/mes-do-ambiente-do-expresso-2014_25751.xml
 http://expresso.sapo.pt/manchetes_feed.rss
-http://feeds.destak.pt/DestakRSS
+ignore://feeds.destak.pt/DestakRSS
+http://zap.aeiou.pt/feed
+http://news.google.pt/?output=rss&num=100
+http://www.noticiasaominuto.com/rss/ultima-hora
+http://www.noticiasaominuto.com/rss/politica
+http://www.noticiasaominuto.com/rss/economia
+http://www.noticiasaominuto.com/rss/desporto
+http://www.noticiasaominuto.com/rss/fama
+http://www.noticiasaominuto.com/rss/pais
+http://www.noticiasaominuto.com/rss/mundo
+http://www.noticiasaominuto.com/rss/tech
+http://www.noticiasaominuto.com/rss/cultura

@@ -33,7 +33,7 @@ for feed in feeds:
             link = item.findAll('link')[0].string.strip();
             
 
-            obj = news.find_one({"l":link})
+            obj = news.find_one({"t":title,"p":date})
             if not obj:
                 news.insert({"t":title,"d":description,"l":link,"p":date})
                 print title

@@ -2,13 +2,10 @@ import os
 
 from bson.objectid import ObjectId
 from pymongo import MongoClient
-from whoosh import index
 from whoosh.fields import ID, TEXT, Schema
 from whoosh.index import open_dir, create_in
-from whoosh.qparser.default import QueryParser, MultifieldParser
-from whoosh.qparser.syntax import OrGroup
 
-from utils_whoosh import searchBM25
+
 
 
 client = MongoClient('localhost', 27017)
