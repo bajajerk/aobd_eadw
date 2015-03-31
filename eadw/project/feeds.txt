@@ -73,6 +73,14 @@ http://expresso.sapo.pt/manchetes_feed.rss
 ignore://feeds.destak.pt/DestakRSS
 http://zap.aeiou.pt/feed
 http://news.google.pt/?output=rss&num=100
+http://news.google.pt/?output=rss&num=100&topic=w
+http://news.google.pt/?output=rss&num=100&topic=n
+http://news.google.pt/?output=rss&num=100&topic=b
+http://news.google.pt/?output=rss&num=100&topic=t
+http://news.google.pt/?output=rss&num=100&topic=e
+http://news.google.pt/?output=rss&num=100&topic=s
+http://news.google.pt/?output=rss&num=100&topic=m
+http://news.google.pt/?output=rss&num=100&topic=h
 http://www.noticiasaominuto.com/rss/ultima-hora
 http://www.noticiasaominuto.com/rss/politica
 http://www.noticiasaominuto.com/rss/economia
