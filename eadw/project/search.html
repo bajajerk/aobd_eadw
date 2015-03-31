@@ -1,10 +1,13 @@
 <html>
 <body>
 
-	<input type="text" id="search">
-	<button onclick="search()">search</button>
+	<nav>
+	<div>
+		<input type="text" id="search" onkeyup="search()">
+	</div>
+	</nav>
+
 	<div id="result"></div>
-	
 	
 	<script>
 		function search(){
@@ -39,20 +42,43 @@
 			xhr.open("GET","/search?s="+input.value,true);
 			xhr.send();
 		}
-	
+
+
+		
 	</script>
 
 </body>
 
 <style>
+	body{
+		margin: 0px;
+		padding-top:32px;
+	}
 	
-
 
 	article{
 		background: #EEEEEE;
 		margin: 16px auto;
 		width:800px;
+		padding:16px;
 	}
+	
+
+	nav {
+	  text-align: center;
+	
+		margin:0px;
+		background: #333333;
+		width: 100%;
+		top: 0px;
+		position: fixed;
+		display: inline-block;
+	}
+	
+	nav div {
+			display:block;
+			margin: 4px auto;
+	} 
 
 </style>
 </html>
