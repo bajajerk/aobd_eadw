@@ -42,7 +42,7 @@ http://feeds.tsf.pt/TSF-Economia
 http://feeds.tsf.pt/TSF-Desporto
 http://feeds.tsf.pt/TSF-Vida
 http://feeds.tsf.pt/TSF-Motores
-http://feeds.feedburner.com/jornali?format=xml
+ignore://feeds.feedburner.com/jornali?format=xml
 http://www.cmjornal.xl.pt/rss.aspx
 http://expresso.sapo.pt/static/rss/atualidade--arquivo_23412.xml
 http://expresso.sapo.pt/static/rss/economia_23413.xml
