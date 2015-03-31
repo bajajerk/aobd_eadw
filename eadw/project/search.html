@@ -7,7 +7,11 @@
 	</div>
 	</nav>
 
-	<div id="result"></div>
+	<div id="result">
+	
+					  			<article><h1 style="color:#bbbbbb">No results for this query</h1></article>
+	
+	</div>
 	
 	<script>
 		function search(){
@@ -24,17 +28,21 @@
 			    {
 				  	var json = JSON.parse(xhr.responseText);
 				  	html = "";
-				  	for(var i= 0; i < json.length; ++i){
+				  	if (json.length==0){
 					  	html += "<article>";
-					  	html += "<h1>"+json[i].t+"</h1>";
-					  	html += "<p>Published: <time>"+json[i].p+"</time></p>";
-
-					  	html += json[i].d;
-					  	html += "<p><a href='"+json[i].l+"'>read more</a></p>";
-
+				  		html += "<h1 style='color:#bbbbbb'>No results for this query</h1>";
 					  	html += "</article>";				  		
 				  	}
-				  	
+				  	else {				  	
+					  	for(var i= 0; i < json.length; ++i){
+						  	html += "<article>";
+						  	html += "<h1>"+json[i].t+"</h1>";
+						  	html += "<p>Published: <time>"+json[i].p+"</time></p>";
+						  	html += json[i].d;
+						  	html += "<p><a href='"+json[i].l+"'>read more</a></p>";
+						  	html += "</article>";				  		
+					  	}
+				  	}
 				  	result.innerHTML=html;
 			    }
 			  }
@@ -42,11 +50,7 @@
 			xhr.open("GET","/search?s="+input.value,true);
 			xhr.send();
 		}
-
-
-		
 	</script>
-
 </body>
 
 <style>
