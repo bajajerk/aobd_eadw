@@ -45,6 +45,7 @@ for post in result:
     description = post["d"]
     title = post["t"]
     writer.add_document(id=unicode(str(post['_id'])),d=description,t=title)
+    print post
     last_post = post
 writer.commit()    
 
@@ -58,11 +59,3 @@ if last_post is not None:
 
 
 
-query = "Passos Coelho"
-    
-with ix.searcher() as searcher:
-    query = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
-    results = searcher.search(query, limit=100)
-    for r in results:
-        post = news.find_one({"_id":ObjectId(r["id"])})
-        print "###",post

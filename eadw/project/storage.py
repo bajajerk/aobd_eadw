@@ -36,7 +36,7 @@ for feed in feeds:
             obj = news.find_one({"l":link})
             if not obj:
                 news.insert({"t":title,"d":description,"l":link,"p":date})
-                print "###########################\n",description
+                print title
 
 
     except urllib2.URLError, e:

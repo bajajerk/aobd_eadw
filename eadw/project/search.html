@@ -1,0 +1,58 @@
+<html>
+<body>
+
+	<input type="text" id="search">
+	<button onclick="search()">search</button>
+	<div id="result"></div>
+	
+	
+	<script>
+		function search(){
+			var input = document.getElementById("search")
+			var result = document.getElementById("result")
+			result.innerHTML = input.value; 
+			
+			var xhr=new XMLHttpRequest();
+			
+			
+			xhr.onreadystatechange=function()
+			  {
+			  if (xhr.readyState==4 && xhr.status==200)
+			    {
+				  	var json = JSON.parse(xhr.responseText);
+				  	html = "";
+				  	for(var i= 0; i < json.length; ++i){
+					  	html += "<article>";
+					  	html += "<h1>"+json[i].t+"</h1>";
+					  	html += "<p>Published: <time>"+json[i].p+"</time></p>";
+
+					  	html += json[i].d;
+					  	html += "<p><a href='"+json[i].l+"'>read more</a></p>";
+
+					  	html += "</article>";				  		
+				  	}
+				  	
+				  	result.innerHTML=html;
+			    }
+			  }
+			
+			xhr.open("GET","/search?s="+input.value,true);
+			xhr.send();
+		}
+	
+	</script>
+
+</body>
+
+<style>
+	
+
+
+	article{
+		background: #EEEEEE;
+		margin: 16px auto;
+		width:800px;
+	}
+
+</style>
+</html>
