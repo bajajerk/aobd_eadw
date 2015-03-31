@@ -8,9 +8,7 @@
 	</nav>
 
 	<div id="result">
-	
-					  			<article><h1 style="color:#bbbbbb">No results for this query</h1></article>
-	
+		
 	</div>
 	
 	<script>
@@ -50,7 +48,9 @@
 			xhr.open("GET","/search?s="+input.value,true);
 			xhr.send();
 		}
-	</script>
+		search();
+
+		</script>
 </body>
 
 <style>
