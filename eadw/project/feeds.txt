@@ -120,6 +120,7 @@ ignore://cotonete.iol.pt/webservices/rss/coto_djSet_feed.ashx?site_id=5
 ignore://cotonete.iol.pt/webservices/rss/critics_feed.ashx?site_id=5
 ignore://cotonete.iol.pt/webservices/rss/lancamentos_feed.ashx?site_id=5
 ignore://cotonete.iol.pt/webservices/rss/new_songs_feed.ashx?site_id=5
+ignore://cotonete.iol.pt/webservices/rss/passatempos_feed.ashx?site_id=5
 http://news.automotor.xl.pt/syndication/aut_rss.xml
 http://news.automotor.xl.pt/syndication/aut_rss.xml?s=12
 http://news.automotor.xl.pt/syndication/aut_rss.xml?s=13
@@ -165,7 +166,6 @@ http://news.rotas.xl.pt/syndication/rot_rss.xml?s=27
 http://news.rotas.xl.pt/syndication/rot_rss.xml?s=28
 http://androidgeek.pt/feed/
 http://pplware.sapo.pt/feed/
-http://cotonete.iol.pt/webservices/rss/passatempos_feed.ashx?site_id=5
 http://feeds.feedburner.com/ExameInformatica-geral?format=xml
 http://feeds.feedburner.com/Exameinformatica-software?format=xml
 http://feeds.feedburner.com/Exameinformatica-hardware?format=xml
