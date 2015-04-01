@@ -43,7 +43,7 @@ for post in result:
     description = post["d"]
     title = post["t"]
     writer.add_document(id=unicode(str(post['_id'])),d=description,t=title)
-    print title
+    print "\t",title
     last_post = post
 writer.commit()    
 

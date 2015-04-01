@@ -35,8 +35,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(self):
         o = urlparse.urlparse(self.path)
         query = urlparse.parse_qs(o.query)
-        print query
-        print self.path
+     
         
         """Serve a GET request."""
         if self.path.startswith("/search"):
