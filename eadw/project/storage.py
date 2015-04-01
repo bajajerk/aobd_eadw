@@ -20,15 +20,17 @@ for url in feeds:
 
     feed = feedparser.parse( url )
     for entry in feed.entries:
-        date = entry.published
-   
-        title = entry.title
-        description = entry.summary
-        link =entry.link
-
-        obj = news.find_one({"t":title,"p":date})
-        if not obj:
-            news.insert({"t":title,"d":description,"l":link,"p":date})
-            print title
-
+        try:
+            date = entry.published
+       
+            title = entry.title
+            description = entry.summary
+            link =entry.link
+    
+            obj = news.find_one({"t":title,"p":date})
+            if not obj:
+                news.insert({"t":title,"d":description,"l":link,"p":date})
+                print title
+        except AttributeError, e:
+            print "[ERROR]"
     

@@ -153,12 +153,6 @@ http://www.jornaldenegocios.pt/funcionalidades/rss/generarRSS.php?idCat=88
 http://www.jornaldenegocios.pt/funcionalidades/rss/generarRSS.php?idCat=155
 http://www.jornaldenegocios.pt/funcionalidades/rss/generarRSS.php?idCat=207
 http://www.jornaldenegocios.pt/funcionalidades/rss/generarRSS.php?idCat=227
-http://www.jogos.xl.pt/syndication/?ordena=ultimos
-http://www.jogos.xl.pt/syndication/?categoria=4
-http://www.jogos.xl.pt/syndication/?categoria=1
-http://www.jogos.xl.pt/syndication/?categoria=3
-http://www.jogos.xl.pt/syndication/?categoria=5
-http://www.jogos.xl.pt/syndication/?categoria=2
 http://www.record.pt/rss/rss.asp
 http://www.record.pt/rss/rss.asp?idcanal=11
 http://www.record.pt/rss/rss.asp?idcanal=17
