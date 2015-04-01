@@ -1,13 +1,11 @@
-import urllib2
-from bs4 import BeautifulSoup
+import feedparser
 
 
-file = open("feeds.txt","r")
-feeds = file.read().splitlines()
-file.close()
+f = open("feeds.txt","r")
+feeds = f.read().splitlines()
+f.close()
 print feeds
     
-import pymongo
 from pymongo import MongoClient
 
 client = MongoClient('localhost', 27017)
@@ -18,27 +16,20 @@ news = db['news']
 
     
 
-for feed in feeds:
-    try:
-        response = urllib2.urlopen(feed)
-        print "##### ",feed, " #####"
-        rss = response.read()
-        soup = BeautifulSoup(rss, "xml")
-        soup.prettify()
-        for item in soup.findAll('item'):
-            date = item.findAll('pubDate')[0].string.strip();
-       
-            title = item.findAll('title')[0].string.strip();
-            description = item.findAll('description')[0].string.strip();
-            link = item.findAll('link')[0].string.strip();
-            
+for url in feeds:
+    print "###### ", url, " #####"
 
-            obj = news.find_one({"t":title,"p":date})
-            if not obj:
-                news.insert({"t":title,"d":description,"l":link,"p":date})
-                print title
+    feed = feedparser.parse( url )
+    for entry in feed.entries:
+        date = entry.published
+   
+        title = entry.title
+        description = entry.summary
+        link =entry.link
 
+        obj = news.find_one({"t":title,"p":date})
+        if not obj:
+            news.insert({"t":title,"d":description,"l":link,"p":date})
+            print title
 
-    except urllib2.URLError, e:
-        print feed, " | ", e
-
+    
