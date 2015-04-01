@@ -4,7 +4,6 @@ import feedparser
 f = open("feeds.txt","r")
 feeds = f.read().splitlines()
 f.close()
-print feeds
     
 from pymongo import MongoClient
 

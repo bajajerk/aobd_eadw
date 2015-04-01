@@ -98,7 +98,6 @@ http://feeds.feedburner.com/euronews/pt/sci-tech?format=xml
 http://feeds.feedburner.com/euronews/pt/lifestyle?format=xml
 http://feeds.feedburner.com/euronews/pt/picture-of-the-day?format=xml
 http://feeds.feedburner.com/jornali?format=xml
-
 http://www.rtp.pt/noticias/index.php?headline=216&visual=58&lyt=156&hidenews2=2
 http://www.rtp.pt/noticias/index.php?headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=6&headline=204&visual=58
@@ -113,6 +112,12 @@ http://www.rtp.pt/noticias/index.php?sk=2&headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=3&headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=5&headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=1&headline=204&visual=58
-
 http://www.gazetadorossio.pt/feed/
 http://feeds.feedburner.com/PublicoRSS?format=xml
+http://cotonete.iol.pt/webservices/rss/music_news_feed.ashx?site_id=5
+http://cotonete.iol.pt/webservices/rss/interview_feed.ashx?site_id=5
+http://cotonete.iol.pt/webservices/rss/coto_djSet_feed.ashx?site_id=5
+http://cotonete.iol.pt/webservices/rss/critics_feed.ashx?site_id=5
+http://cotonete.iol.pt/webservices/rss/lancamentos_feed.ashx?site_id=5
+http://cotonete.iol.pt/webservices/rss/new_songs_feed.ashx?site_id=5
+http://cotonete.iol.pt/webservices/rss/passatempos_feed.ashx?site_id=5
