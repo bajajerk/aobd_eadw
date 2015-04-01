@@ -5,8 +5,9 @@ from pymongo import MongoClient
 from whoosh.fields import ID, TEXT, Schema
 from whoosh.index import open_dir, create_in
 
-
-
+print "#########################################################"
+print "################### INDEX PROCESS #######################"
+print "#########################################################"
 
 client = MongoClient('localhost', 27017)
 db = client['eadw_proj']
@@ -42,7 +43,7 @@ for post in result:
     description = post["d"]
     title = post["t"]
     writer.add_document(id=unicode(str(post['_id'])),d=description,t=title)
-    print post
+    print title
     last_post = post
 writer.commit()    
 

@@ -113,3 +113,6 @@ http://www.rtp.pt/noticias/index.php?sk=2&headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=3&headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=5&headline=204&visual=58
 http://www.rtp.pt/noticias/index.php?sk=1&headline=204&visual=58
+
+http://www.gazetadorossio.pt/feed/
+http://feeds.feedburner.com/PublicoRSS?format=xml
