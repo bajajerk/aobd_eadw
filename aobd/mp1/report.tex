@@ -1,0 +1,110 @@
+\documentclass[11pt,report]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{makeidx}
+\usepackage{blindtext}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hmargin=3cm,vmargin=3.5cm]{geometry}
+\usepackage{indentfirst}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{eurosym}
+\usepackage{url}
+
+\lstset{frame=tb,
+  language=SQL,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+\usepackage{titlesec}
+\titleformat{\section}{\hrule \large\bfseries}{\thesection}{1em}{}
+\newcommand{\tab}{\hspace*{3em}}
+
+\renewcommand\thesubsection{\tab\alph{subsection})}
+
+
+\title{	Database Administration and Tuning \\ Mini-Project 1 - Report}
+\author{
+	Henrique Rocha - 68621 \\
+	Ludijor Barros - 68626 \\
+	Fábio Martins - 71073
+}
+
+
+
+
+\date{\today}
+\begin{document}
+
+	\maketitle
+\section{SQL Server Databases}
+	\textbf{Present SQL Server T-SQL commands for accomplishing the following tasks:}
+	\subsection{}
+	\textbf{Create a database named NutrientsDB, containing one log file and three different data files, in three distinct filegroups (i.e., one data file in each filegroup). The log file should have an initial size of 25MB and a maximum size of 250MB. All data files should have an unlimited maximum size, except the one in the primary filegroup, which should have a maximum size of 1GB). The first data file on the first secondary filegroup should have an initial size of 100MB, and the remaining files should have an initial size of 50MB. All files should grow at a rate of 50\%, except for the data file in the primary filegroup, which should grow by 5MB, every time this is required.}
+
+\begin{lstlisting}
+CREATE DATABASE NutrientsDB ON PRIMARY {
+	NAME = NutrientsDB,
+	FILENAME = 'd:\data\NutrientsDB.mdf',
+	SIZE = 3MB, MAXSIZE = 100MB, FILEGROWTH = 1MB )
+LOG ON (
+	NAME = 'NutrientsLog',
+	FILENAME = 'd:\data\NutrientsLog.ldf',
+	SIZE = 3MB, MAXSIZE = 100MB, FILEGROWTH = 10% )
+\end{lstlisting}
+
+	\subsection{}
+	\textbf{Create a table named Cheese in the NutrientsDB database. The table should have a numeric attribute named cheeseID, that identifies the individual records, an alphanumeric attribute named Type, and four other numeric attributes named Calories, Proteins, Carbohidrates, and Fat. The table should be partitioned so that all tuples where cheeseID is less or equal than 50 are physically stored in the primary filegroup, all tuples where the cheeseID is greater than 50, but less or equal than 100, are physically stored in the first secondary filegroup, and the remaining tuples are physically stored in the second secondary filegroup.}
+
+	\subsection{}
+	\textbf{In the table named Cheese, the amount of calories is stored in an attribute named Calories, in Kcals per 100 grams. Create an index over the table with a search key corresponding to the calories in cals per 100 grams, including the amount of protein and fat as additional attributes that are not part of the search key. The index should be physically stored in the primary filegroup. Indicate also if the index is clustered or non-clustered, justifying.}
+
+\section{B+Tree Index Structures}
+	\textbf{Consider the problem of inserting the following keys, in the given order, into an empty B+-tree where nodes can hold up to 3 values:}
+	
+	\textbf{Parmesão, Ilha, Camembert, Fresco, Requeijão, Azeitão, Alverca, Serra, Alcobaça, Roquefort, Flamengo, Emmental, Évora, Creme, Serpa, Quark}
+
+	\subsection{}
+	\textbf{Draw the tree after each insertion.}
+
+
+	\subsection{}
+	\textbf{Delete the following keys from the B+tree data structure from the previous exercise: Ilha; Flamengo; Emmental; Serpa. Draw the tree after each deletion.}
+
+\section{Extendable Hashing Index Schemes}
+
+
+\section{Estimating the Cost of Relational Algebra Operations}
+	\subsection{}
+	\subsection{}
+	\subsection{}
+
+\section{Query Optimization and Estimation of Join Sizes}
+	
+\section{External talk: Casos Reais na Administração de Bases de Dados}
+	\subsection{}
+	\subsection{}
+
+\end{document}
