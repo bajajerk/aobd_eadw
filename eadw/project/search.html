@@ -6,15 +6,14 @@
 		<input type="text" id="search" onkeyup="search()">
 	</div>
 	</nav>
-
-	<div id="result">
-		
-	</div>
+	<div id="suggestions"></div>
+	<div id="result"></div>
 	
 	<script>
 		function search(){
-			var input = document.getElementById("search")
-			var result = document.getElementById("result")
+			var input = document.getElementById("search");
+			var result = document.getElementById("result");
+			var suggestions = document.getElementById("suggestions");
 			result.innerHTML = input.value; 
 			
 			var xhr=new XMLHttpRequest();
@@ -26,21 +25,24 @@
 			    {
 				  	var json = JSON.parse(xhr.responseText);
 				  	html = "";
-				  	if (json.length==0){
+				  	if (json.r.length==0){
 					  	html += "<article>";
 				  		html += "<h1 style='color:#bbbbbb'>No results for this query</h1>";
 					  	html += "</article>";				  		
 				  	}
 				  	else {				  	
-					  	for(var i= 0; i < json.length; ++i){
+					  	for(var i= 0; i < json.r.length; ++i){
 						  	html += "<article>";
-						  	html += "<h1>"+json[i].t+"</h1>";
-						  	html += "<p>Published: <time>"+json[i].p+"</time></p>";
-						  	html += json[i].d;
-						  	html += "<p><a href='"+json[i].l+"'>read more</a></p>";
+						  	html += "<h1>"+json.r[i].t+"</h1>";
+						  	html += "<p>Published: <time>"+json.r[i].p+"</time></p>";
+						  	html += json.r[i].d;
+						  	html += "<p><a href='"+json.r[i].l+"'>read more</a></p>";
 						  	html += "</article>";				  		
 					  	}
 				  	}
+				  
+				  	suggestions.innerHTML="did you said? "+ json.s;
+				  	
 				  	result.innerHTML=html;
 			    }
 			  }

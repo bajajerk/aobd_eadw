@@ -27,7 +27,7 @@ if not os.path.exists(directory):
 # do query for new news
 ix = None
 if not last_id:
-    schema = Schema(id=ID(stored=True), d=TEXT,t=TEXT)
+    schema = Schema(id=ID(stored=True), d=TEXT(spelling=True),t=TEXT(spelling=True))
     ix = create_in(directory, schema)
     result = news.find()
 else:

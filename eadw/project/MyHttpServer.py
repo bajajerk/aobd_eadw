@@ -61,15 +61,21 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             s = query["s"][0]
         else:
             s =""
-        
-        ret = []
+    
+    
+        ret = {"r":[],"s":[]}
         with ix.searcher() as searcher:
             parser = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(s,"UTF-8"))
             results = searcher.search(parser, limit=100)
             for r in results:
                 post = news.find_one({"_id":ObjectId(r["id"])})
-                ret.append({"t":post["t"],"d":post["d"],"p":post["p"],"l":post["l"]})
+                ret["r"].append({"t":post["t"],"d":post["d"],"p":post["p"],"l":post["l"]})
         
+        
+            corrector = searcher.corrector("d")
+            for m in s.split():
+        
+                ret["s"].append(corrector.suggest(m, limit=3))        
         
         f = StringIO()   
         f.write(json.dumps(ret,indent=4, separators=(',', ': ')))
