@@ -131,19 +131,16 @@ LOG ON (
 
 	\subsection{}
 	{\color{gray} Selection on the Location relation where the filtering condition is climate-type = 'Dry', assuming there is an index on the table over the attribute climate-type.}
+	\begin{equation}\sigma_{climate-type='Dry'}(Location)\end{equation}
 
 	The selection operation is performed over an index, because this index isn't over the primary key, we can assume that it is non-clustering. Besides that, we are only testing for equality, that means that we must use algorithm 4 (A4) to retrieve multiple records (multiple locations).
-	\begin{equation}Cost = (h_i + n) * (t_T + t_S)\end{equation}
+	\begin{equation}Cost = (h_i + n) \end{equation}
 	
-	{\color{red} [This is not the number of I/O's]}
-
+	{\color{red}[Cost => seek and read, is seek an IO?]}
+	
 	Where:
 
-	\tab $t_T$ – time to transfer one block
-
-	\tab $t_S$ – time for one seek
-
-	\tab $n$ – number of records fetched
+	\tab $n$ – number of records fetched (n=|S|, worst case)
 
 	\tab $h_i$ – height of B+ tree
 
@@ -156,8 +153,6 @@ LOG ON (
 
 	Best case (if $b_r$ and $b_s$ fits in memory):
 	\begin{equation}Cost = (b_r + b_s) $block transfers$+ 2 $seeks$\end{equation}
-
-	{\color{red} [Outputs? How many results?]}
 
 	\subsection{}
 	{\color{gray}Sort-Merge Join, assuming that only the relation Location is ordered on region-name, the relation CheeseProvenance is ordered on cheese-name and that you can have 3 pages in memory when sorting the relations.}
