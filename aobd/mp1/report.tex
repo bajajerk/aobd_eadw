@@ -118,6 +118,17 @@ LOG ON (
 
 {\color{gray} Compute the number of I/Os performed by each of the following algorithms:}
 
+	Data:
+
+	\tab $b_r = 1000$ blocks
+
+	\tab $b_s = 2300$ blocks
+
+	\tab $|R|/b_r = 120$ tuples/block
+
+	\tab $|S|/b_s = 100$ tuples/block
+
+
 	\subsection{}
 	{\color{gray} Selection on the Location relation where the filtering condition is climate-type = 'Dry', assuming there is an index on the table over the attribute climate-type.}
 
@@ -138,14 +149,27 @@ LOG ON (
 
 	\subsection{}
 	{\color{gray} Block Nested Loop Join, with CheeseProvenance as the outer relation and the join condition is on region-name. Present the costs of the worst and best cases.}
-	
-	Worst case:
-	\begin{equation}Cost = br * bs + br block transfers + 2 * br seeks\end{equation}
+	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
 
-	Best case (inner relation fits in memory):
-	\begin{equation}Cost = br + bs block transfers + 2 seeks\end{equation}
+	Worst case:
+	\begin{equation}Cost = (b_r * b_s + b_r) $block transfers$ + (2 * b_r) $seeks$\end{equation}
+
+	Best case (if $b_r$ and $b_s$ fits in memory):
+	\begin{equation}Cost = (b_r + b_s) $block transfers$+ 2 $seeks$\end{equation}
+
+	{\color{red} [Outputs? How many results?]}
 
 	\subsection{}
+	{\color{gray}Sort-Merge Join, assuming that only the relation Location is ordered on region-name, the relation CheeseProvenance is ordered on cheese-name and that you can have 3 pages in memory when sorting the relations.}
+	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
+
+	Let:
+
+	\tab $M = 3$ pages
+	\begin{equation}Cost_{merge} = (b_r + b_s) \end{equation}
+	\begin{equation}Cost_{sort} = 2b_s(\lceil log_{M-1}(b_s/M) \rceil+1) \end{equation}
+	\begin{equation}Cost = Cost_{sort} + Cost_{merge} \end{equation}	
+
 
 \section{Query Optimization and Estimation of Join Sizes}
 	
