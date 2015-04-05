@@ -119,7 +119,32 @@ LOG ON (
 {\color{gray} Compute the number of I/Os performed by each of the following algorithms:}
 
 	\subsection{}
+	{\color{gray} Selection on the Location relation where the filtering condition is climate-type = 'Dry', assuming there is an index on the table over the attribute climate-type.}
+
+	The selection operation is performed over an index, because this index isn't over the primary key, we can assume that it is non-clustering. Besides that, we are only testing for equality, that means that we must use algorithm 4 (A4) to retrieve multiple records (multiple locations).
+	\begin{equation}Cost = (h_i + n) * (t_T + t_S)\end{equation}
+	
+	{\color{red} [This is not the number of I/O's]}
+
+	Where:
+
+	\tab $t_T$ – time to transfer one block
+
+	\tab $t_S$ – time for one seek
+
+	\tab $n$ – number of records fetched
+
+	\tab $h_i$ – height of B+ tree
+
 	\subsection{}
+	{\color{gray} Block Nested Loop Join, with CheeseProvenance as the outer relation and the join condition is on region-name. Present the costs of the worst and best cases.}
+	
+	Worst case:
+	\begin{equation}Cost = br * bs + br block transfers + 2 * br seeks\end{equation}
+
+	Best case (inner relation fits in memory):
+	\begin{equation}Cost = br + bs block transfers + 2 seeks\end{equation}
+
 	\subsection{}
 
 \section{Query Optimization and Estimation of Join Sizes}
