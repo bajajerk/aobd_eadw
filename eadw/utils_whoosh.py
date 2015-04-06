@@ -6,6 +6,7 @@ from whoosh.fields import NUMERIC, TEXT, Schema
 from whoosh.index import open_dir, create_in
 from whoosh.qparser.default import QueryParser
 from whoosh.qparser.syntax import OrGroup
+from whoosh.compat import iteritems
 
 
 def index(dir,lines):
@@ -107,7 +108,7 @@ def stop(text):
 
 
 
-def searchPageRank(dir,index,query,lim,rank):
+def searchPageRank(dir,query,lim,rank):
     index = open_dir(dir)
     
     class PageRankScorer(scoring.BaseScorer):
@@ -135,6 +136,61 @@ def searchPageRank(dir,index,query,lim,rank):
     
     res = []   
     with index.searcher(weighting=pageRankWeight()) as searcher:
+        query = QueryParser("content", index.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
+        results = searcher.search(query, limit=lim)
+        for r in results:
+            res.append(r["id"])
+        
+        
+    return res
+
+
+def bm25(idf, tf, fl, avgfl, B, K1):
+    # idf - inverse document frequency
+    # tf - term frequency in the current document
+    # fl - field length in the current document
+    # avgfl - average field length across documents in collection
+    # B, K1 - free paramters
+
+    return idf * ((tf * (K1 + 1)) / (tf + K1 * ((1 - B) + B * fl / avgfl)))
+
+def searchL2R(dir,query,lim,rank,w):
+    index = open_dir(dir)
+    
+    
+    class L2RScorer(scoring.BaseScorer):
+        def __init__(self, idfScorer,bm25Scorer):
+            self.idfScorer = idfScorer
+            self.bm25Scorer = bm25Scorer
+    
+        def score(self, matcher):
+
+            doc = str(matcher.id()+1)
+            
+            r = 0
+            if doc in rank.keys():
+                r = rank[doc]
+
+            return self.idfScorer.score(matcher)*w[1]+self.bm25Scorer.score(matcher)*w[0]+r*w[2]
+        
+
+    class L2RWeight(scoring.WeightingModel):        
+        def scorer(self, searcher, fieldname, text, qf=1):
+            # BM25
+            bm25Scorer = scoring.BM25FScorer(searcher, fieldname, text, B=0.75, K1=1.2, qf=qf)
+            
+            
+            # IDF is a global statistic, so get it from the top-level searcher
+            parent = searcher.get_parent()  # Returns self if no parent
+            idf = parent.idf(fieldname, text)
+    
+            maxweight = searcher.term_info(fieldname, text).max_weight()
+            tfidfScorer = scoring.TF_IDFScorer(maxweight, idf)
+            
+            return L2RScorer(tfidfScorer,bm25Scorer)
+    
+    res = []   
+    with index.searcher(weighting=L2RWeight()) as searcher:
         query = QueryParser("content", index.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
         results = searcher.search(query, limit=lim)
         for r in results:

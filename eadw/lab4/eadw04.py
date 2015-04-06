@@ -27,7 +27,7 @@ file2 = open("../lab3/aula03_cfc.txt","r")
 lines2 = file2.readlines()
 ix = index("indexl4",lines2)
 
-result = searchPageRank("indexl4",ix,"first document",100,rank)
+result = searchPageRank("indexl4","first document",100,rank)
 print result
 
 print "Exercise 4"
@@ -37,6 +37,6 @@ for i in range(0,len(lines3)/2):
     text = lines3[i*2+0];
     number_strings = lines3[i*2+1].split();
     expected = [int(el) for el in number_strings]
-    result2 = searchPageRank("indexl4",ix,text,100,rank)
+    result2 = searchPageRank("indexl4",text,100,rank)
     print "\n",text, "\t", result2
 
