@@ -135,14 +135,18 @@ LOG ON (
 
 	The selection operation is performed over an index, because this index isn't over the primary key, we can assume that it is non-clustering. Besides that, we are only testing for equality, that means that we must use algorithm 4 (A4) to retrieve multiple records (multiple locations).
 	\begin{equation}Cost = (h_i + n) \end{equation}
-	
-	{\color{red}[Cost => seek and read, is seek an IO?]}
-	
+		
 	Where:
 
 	\tab $n$ – number of records fetched (n=|S|, worst case)
 
 	\tab $h_i$ – height of B+ tree
+
+	With each I/O operation requiring a seek and a block transfer.
+
+	\iffalse
+		Database System Concepts, Pag 542
+	\fi
 
 	\subsection{}
 	{\color{gray} Block Nested Loop Join, with CheeseProvenance as the outer relation and the join condition is on region-name. Present the costs of the worst and best cases.}
@@ -153,6 +157,10 @@ LOG ON (
 
 	Best case (if $b_r$ and $b_s$ fits in memory):
 	\begin{equation}Cost = (b_r + b_s) $block transfers$+ 2 $seeks$\end{equation}
+	
+	\iffalse
+		Database System Concepts, Pag 551
+	\fi
 
 	\subsection{}
 	{\color{gray}Sort-Merge Join, assuming that only the relation Location is ordered on region-name, the relation CheeseProvenance is ordered on cheese-name and that you can have 3 pages in memory when sorting the relations.}
