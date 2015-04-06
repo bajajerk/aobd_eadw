@@ -1,0 +1,30 @@
+	{\color{gray}Present SQL Server T-SQL commands for accomplishing the following tasks:}
+	\subsection{}
+	{\color{gray}Create a database named NutrientsDB, containing one log file and three different data files, in three distinct filegroups (i.e., one data file in each filegroup). The log file should have an initial size of 25MB and a maximum size of 250MB. All data files should have an unlimited maximum size, except the one in the primary filegroup, which should have a maximum size of 1GB). The first data file on the first secondary filegroup should have an initial size of 100MB, and the remaining files should have an initial size of 50MB. All files should grow at a rate of 50\%, except for the data file in the primary filegroup, which should grow by 5MB, every time this is required.}
+
+\begin{lstlisting}
+CREATE DATABASE NutrientsDB ON 
+PRIMARY (
+	NAME = NutrientsDB,
+	FILENAME = 'd:\data\NutrientsDB_01.mdf',
+	SIZE = 50MB, MAXSIZE = 1GB, FILEGROWTH = 5MB ),
+FILEGROUP NutrientsDB_02 (
+	NAME = 'NutrientsDB_02', 
+	FILENAME = 'd:\data\NutrientsDB_02.ndf', 
+	SIZE = 100MB, MAXSIZE=UNLIMITED, FILEGROWTH = 50% ),
+FILEGROUP NutrientsDB_03 (
+	NAME = 'NutrientsDB_03', 
+	FILENAME = 'd:\data\NutrientsDB_03.ndf', 
+	SIZE = 50MB, MAXSIZE=UNLIMITED, FILEGROWTH = 50% )
+LOG ON (
+	NAME = 'NutrientsLog',
+	FILENAME = 'd:\data\NutrientsLog.ldf',
+	SIZE = 25MB, MAXSIZE = 250MB, FILEGROWTH = 50% );
+\end{lstlisting}
+
+	\subsection{}
+	{\color{gray}Create a table named Cheese in the NutrientsDB database. The table should have a numeric attribute named cheeseID, that identifies the individual records, an alphanumeric attribute named Type, and four other numeric attributes named Calories, Proteins, Carbohidrates, and Fat. The table should be partitioned so that all tuples where cheeseID is less or equal than 50 are physically stored in the primary filegroup, all tuples where the cheeseID is greater than 50, but less or equal than 100, are physically stored in the first secondary filegroup, and the remaining tuples are physically stored in the second secondary filegroup.}
+
+	\subsection{}
+	{\color{gray}In the table named Cheese, the amount of calories is stored in an attribute named Calories, in Kcals per 100 grams. Create an index over the table with a search key corresponding to the calories in cals per 100 grams, including the amount of protein and fat as additional attributes that are not part of the search key. The index should be physically stored in the primary filegroup. Indicate also if the index is clustered or non-clustered, justifying.}
+

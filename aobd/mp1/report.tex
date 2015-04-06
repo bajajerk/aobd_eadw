@@ -52,132 +52,20 @@
 	Fábio Martins - 71073
 }
 
-
-
-
 \date{\today}
 \begin{document}
 
 	\maketitle
 \section{SQL Server Databases}
-	{\color{gray}Present SQL Server T-SQL commands for accomplishing the following tasks:}
-	\subsection{}
-	{\color{gray}Create a database named NutrientsDB, containing one log file and three different data files, in three distinct filegroups (i.e., one data file in each filegroup). The log file should have an initial size of 25MB and a maximum size of 250MB. All data files should have an unlimited maximum size, except the one in the primary filegroup, which should have a maximum size of 1GB). The first data file on the first secondary filegroup should have an initial size of 100MB, and the remaining files should have an initial size of 50MB. All files should grow at a rate of 50\%, except for the data file in the primary filegroup, which should grow by 5MB, every time this is required.}
-
-\begin{lstlisting}
-CREATE DATABASE NutrientsDB ON 
-PRIMARY (
-	NAME = NutrientsDB,
-	FILENAME = 'd:\data\NutrientsDB_01.mdf',
-	SIZE = 50MB, MAXSIZE = 1GB, FILEGROWTH = 5MB ),
-FILEGROUP NutrientsDB_02 (
-	NAME = 'NutrientsDB_02', 
-	FILENAME = 'd:\data\NutrientsDB_02.ndf', 
-	SIZE = 100MB, MAXSIZE=UNLIMITED, FILEGROWTH = 50% ),
-FILEGROUP NutrientsDB_03 (
-	NAME = 'NutrientsDB_03', 
-	FILENAME = 'd:\data\NutrientsDB_03.ndf', 
-	SIZE = 50MB, MAXSIZE=UNLIMITED, FILEGROWTH = 50% )
-LOG ON (
-	NAME = 'NutrientsLog',
-	FILENAME = 'd:\data\NutrientsLog.ldf',
-	SIZE = 25MB, MAXSIZE = 250MB, FILEGROWTH = 50% );
-\end{lstlisting}
-
-	\subsection{}
-	{\color{gray}Create a table named Cheese in the NutrientsDB database. The table should have a numeric attribute named cheeseID, that identifies the individual records, an alphanumeric attribute named Type, and four other numeric attributes named Calories, Proteins, Carbohidrates, and Fat. The table should be partitioned so that all tuples where cheeseID is less or equal than 50 are physically stored in the primary filegroup, all tuples where the cheeseID is greater than 50, but less or equal than 100, are physically stored in the first secondary filegroup, and the remaining tuples are physically stored in the second secondary filegroup.}
-
-	\subsection{}
-	{\color{gray}In the table named Cheese, the amount of calories is stored in an attribute named Calories, in Kcals per 100 grams. Create an index over the table with a search key corresponding to the calories in cals per 100 grams, including the amount of protein and fat as additional attributes that are not part of the search key. The index should be physically stored in the primary filegroup. Indicate also if the index is clustered or non-clustered, justifying.}
-
+\input{section01.tex}
 \section{B+Tree Index Structures}
-	{\color{gray}Consider the problem of inserting the following keys, in the given order, into an empty B+-tree where nodes can hold up to 3 values:}
-	
-	{\color{gray}Parmesão, Ilha, Camembert, Fresco, Requeijão, Azeitão, Alverca, Serra, Alcobaça, Roquefort, Flamengo, Emmental, Évora, Creme, Serpa, Quark}
-
-	\subsection{}
-	{\color{gray}Draw the tree after each insertion.}
-
-
-	\subsection{}
-	{\color{gray}Delete the following keys from the B+tree data structure from the previous exercise: Ilha; Flamengo; Emmental; Serpa. Draw the tree after each deletion.}
-
+\input{section02.tex}
 \section{Extendable Hashing Index Schemes}
-
-
+\input{section03.tex}
 \section{Estimating the Cost of Relational Algebra Operations}
-	{\color{gray}Consider the following relational schema:}
-	
-	\textbf{\color{gray}\tab CheeseProvenance(\underline{cheese-name}, region-name)}
-
-	\textbf{\color{gray}\tab Location(\underline{region-name}, climate-type)}
-
-{\color{gray}The relation CheeseProvenance stores information about the region where each cheese type is produced, and the relation Location stores information about the the regions that produce cheese.}
-
-{\color{gray}All tuples have fixed size. The relation CheeseProvenance takes 1000 blocks and the relation Location has 2300 blocks. Each page of CheeseProvenance contains 120 tuples and each page of Location contains 100 tuples.}
-
-{\color{gray} Compute the number of I/Os performed by each of the following algorithms:}
-
-	Data:
-
-	\tab $b_r = 1000$ blocks
-
-	\tab $b_s = 2300$ blocks
-
-	\tab $|R|/b_r = 120$ tuples/block
-
-	\tab $|S|/b_s = 100$ tuples/block
-
-
-	\subsection{}
-	{\color{gray} Selection on the Location relation where the filtering condition is climate-type = 'Dry', assuming there is an index on the table over the attribute climate-type.}
-	\begin{equation}\sigma_{climate-type='Dry'}(Location)\end{equation}
-
-	The selection operation is performed over an index, because this index isn't over the primary key, we can assume that it is non-clustering. Besides that, we are only testing for equality, that means that we must use algorithm 4 (A4) to retrieve multiple records (multiple locations).
-	\begin{equation}Cost = (h_i + n) \end{equation}
-		
-	Where:
-
-	\tab $n$ – number of records fetched (n=|S|, worst case)
-
-	\tab $h_i$ – height of B+ tree
-
-	With each I/O operation requiring a seek and a block transfer.
-
-	\iffalse
-		Database System Concepts, Pag 542
-	\fi
-
-	\subsection{}
-	{\color{gray} Block Nested Loop Join, with CheeseProvenance as the outer relation and the join condition is on region-name. Present the costs of the worst and best cases.}
-	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
-
-	Worst case:
-	\begin{equation}Cost = (b_r * b_s + b_r) $block transfers$ + (2 * b_r) $seeks$\end{equation}
-
-	Best case (if $b_r$ and $b_s$ fits in memory):
-	\begin{equation}Cost = (b_r + b_s) $block transfers$+ 2 $seeks$\end{equation}
-	
-	\iffalse
-		Database System Concepts, Pag 551
-	\fi
-
-	\subsection{}
-	{\color{gray}Sort-Merge Join, assuming that only the relation Location is ordered on region-name, the relation CheeseProvenance is ordered on cheese-name and that you can have 3 pages in memory when sorting the relations.}
-	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
-
-	Let:
-
-	\tab $M = 3$ pages
-	\begin{equation}Cost_{merge} = (b_r + b_s) \end{equation}
-	\begin{equation}Cost_{sort} = 2b_s(\lceil log_{M-1}(b_s/M) \rceil+1) \end{equation}
-	\begin{equation}Cost = Cost_{sort} + Cost_{merge} \end{equation}	
-
-
+\input{section04.tex}
 \section{Query Optimization and Estimation of Join Sizes}
-	
+\input{section05.tex}	
 \section{External talk: Casos Reais na Administração de Bases de Dados}
-	\subsection{}
-	\subsection{}
-
+\input{section06.tex}
 \end{document}

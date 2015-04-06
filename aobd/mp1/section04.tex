@@ -1,0 +1,68 @@
+{\color{gray}Consider the following relational schema:}
+	
+	\textbf{\color{gray}\tab CheeseProvenance(\underline{cheese-name}, region-name)}
+
+	\textbf{\color{gray}\tab Location(\underline{region-name}, climate-type)}
+
+{\color{gray}The relation CheeseProvenance stores information about the region where each cheese type is produced, and the relation Location stores information about the the regions that produce cheese.}
+
+{\color{gray}All tuples have fixed size. The relation CheeseProvenance takes 1000 blocks and the relation Location has 2300 blocks. Each page of CheeseProvenance contains 120 tuples and each page of Location contains 100 tuples.}
+
+{\color{gray} Compute the number of I/Os performed by each of the following algorithms:}
+
+	Data:
+
+	\tab $b_r = 1000$ blocks
+
+	\tab $b_s = 2300$ blocks
+
+	\tab $|R|/b_r = 120$ tuples/block
+
+	\tab $|S|/b_s = 100$ tuples/block
+
+
+	\subsection{}
+	{\color{gray} Selection on the Location relation where the filtering condition is climate-type = 'Dry', assuming there is an index on the table over the attribute climate-type.}
+	\begin{equation}\sigma_{climate-type='Dry'}(Location)\end{equation}
+
+	The selection operation is performed over an index, because this index isn't over the primary key, we can assume that it is non-clustering. Besides that, we are only testing for equality, that means that we must use algorithm 4 (A4) to retrieve multiple records (multiple locations).
+	\begin{equation}Cost = (h_i + n) \end{equation}
+		
+	Where:
+
+	\tab $n$ – number of records fetched (n=|S|, worst case)
+
+	\tab $h_i$ – height of B+ tree
+
+	With each I/O operation requiring a seek and a block transfer.
+
+	\iffalse
+		Database System Concepts, Pag 542
+	\fi
+
+	\subsection{}
+	{\color{gray} Block Nested Loop Join, with CheeseProvenance as the outer relation and the join condition is on region-name. Present the costs of the worst and best cases.}
+	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
+
+	Worst case:
+	\begin{equation}Cost = (b_r * b_s + b_r) $block transfers$ + (2 * b_r) $seeks$\end{equation}
+
+	Best case (if $b_r$ and $b_s$ fits in memory):
+	\begin{equation}Cost = (b_r + b_s) $block transfers$+ 2 $seeks$\end{equation}
+	
+	\iffalse
+		Database System Concepts, Pag 551
+	\fi
+
+	\subsection{}
+	{\color{gray}Sort-Merge Join, assuming that only the relation Location is ordered on region-name, the relation CheeseProvenance is ordered on cheese-name and that you can have 3 pages in memory when sorting the relations.}
+	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
+
+	Let:
+
+	\tab $M = 3$ pages
+	\begin{equation}Cost_{merge} = (b_r + b_s) \end{equation}
+	\begin{equation}Cost_{sort} = 2b_s(\lceil log_{M-1}(b_s/M) \rceil+1) \end{equation}
+	\begin{equation}Cost = Cost_{sort} + Cost_{merge} \end{equation}	
+
+
