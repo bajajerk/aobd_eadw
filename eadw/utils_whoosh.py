@@ -7,6 +7,7 @@ from whoosh.index import open_dir, create_in
 from whoosh.qparser.default import QueryParser
 from whoosh.qparser.syntax import OrGroup
 from whoosh.compat import iteritems
+from whoosh.scoring import BM25F, TF_IDF
 
 
 def index(dir,lines):
@@ -34,11 +35,12 @@ def indexNoStopWords(dir,lines):
         partition = line.split(' ',1)
         i = int(partition[0])
         c = partition[1]
-        writer.add_document(id=i,content=unicode(stop(unicode(c,"UTF-8")),"UTF-8" ))
+        u = unicode(stop(unicode(c,"UTF-8")),"UTF-8" )
+        writer.add_document(id=i,content=u)
     writer.commit()
     return ix
 
-def searchBM25(dir,index,query,lim):
+def searchBM25(dir,query,lim):
     index = open_dir(dir)
     
     res = []
@@ -53,7 +55,7 @@ def searchBM25(dir,index,query,lim):
     return res
 
 
-def searchCOS(dir,index,query,lim):
+def searchCOS(dir,query,lim):
     index = open_dir(dir)
     
     res = []
@@ -84,9 +86,10 @@ def f1(result,expected):
 
 def score(result,expected):
     intersection = [val for val in result if val in expected]
-    if len(intersection)>0:
-        Pr=float(len(intersection))/len(result)
-        Re=float(len(intersection))/len(expected)
+    l = len(intersection)
+    if l>0:
+        Pr=float(l)/len(result)
+        Re=float(l)/len(expected)
         F1=(2*Re*Pr)/(Re+Pr)
         return {"Pr":Pr,"Re":Re,"F1":F1}
     return {"Pr":0,"Re":0,"F1":0}
@@ -145,18 +148,9 @@ def searchPageRank(dir,query,lim,rank):
     return res
 
 
-def bm25(idf, tf, fl, avgfl, B, K1):
-    # idf - inverse document frequency
-    # tf - term frequency in the current document
-    # fl - field length in the current document
-    # avgfl - average field length across documents in collection
-    # B, K1 - free paramters
-
-    return idf * ((tf * (K1 + 1)) / (tf + K1 * ((1 - B) + B * fl / avgfl)))
-
 def searchL2R(dir,query,lim,rank,w):
     index = open_dir(dir)
-    
+    sss = None;
     
     class L2RScorer(scoring.BaseScorer):
         def __init__(self, idfScorer,bm25Scorer):
@@ -164,33 +158,26 @@ def searchL2R(dir,query,lim,rank,w):
             self.bm25Scorer = bm25Scorer
     
         def score(self, matcher):
-
-            doc = str(matcher.id()+1)
-            
+            doc = str(sss.stored_fields(matcher.id())["id"])
             r = 0
             if doc in rank.keys():
                 r = rank[doc]
-
-            return self.idfScorer.score(matcher)*w[1]+self.bm25Scorer.score(matcher)*w[0]+r*w[2]
+            s = self.bm25Scorer.score(matcher)*w[0]+self.idfScorer.score(matcher)*w[1]+r*w[2]
+            return s
         
 
     class L2RWeight(scoring.WeightingModel):        
         def scorer(self, searcher, fieldname, text, qf=1):
             # BM25
-            bm25Scorer = scoring.BM25FScorer(searcher, fieldname, text, B=0.75, K1=1.2, qf=qf)
-            
-            
-            # IDF is a global statistic, so get it from the top-level searcher
-            parent = searcher.get_parent()  # Returns self if no parent
-            idf = parent.idf(fieldname, text)
-    
-            maxweight = searcher.term_info(fieldname, text).max_weight()
-            tfidfScorer = scoring.TF_IDFScorer(maxweight, idf)
+            bm25Scorer = BM25F().scorer(searcher, fieldname, text, qf) 
+            tfidfScorer = TF_IDF().scorer(searcher, fieldname, text, qf)
             
             return L2RScorer(tfidfScorer,bm25Scorer)
     
     res = []   
+    
     with index.searcher(weighting=L2RWeight()) as searcher:
+        sss = searcher
         query = QueryParser("content", index.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
         results = searcher.search(query, limit=lim)
         for r in results:

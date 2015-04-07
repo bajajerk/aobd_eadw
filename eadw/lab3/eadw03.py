@@ -16,7 +16,7 @@ ix = index("indexdir",lines1)
 
 
 print "Exercise 2"
-result = searchBM25("indexdir",ix,"first document",100)
+result = searchBM25("indexdir","first document",100)
 print result
 
 print "Exercise 3"
@@ -30,7 +30,7 @@ for i in range(0,len(lines2)/2):
     text = lines2[i*2+0];
     number_strings = lines2[i*2+1].split();
     expected = [int(el) for el in number_strings]
-    result2 = searchBM25("indexdir",ix,text,100)
+    result2 = searchBM25("indexdir",text,100)
     score2 = score(result2,expected)
     score2["query"]=text
     average["Pr"]+=score2["Pr"]
@@ -50,7 +50,7 @@ for i in range(0,len(lines2)/2):
     text = lines2[i*2+0];
     number_strings = lines2[i*2+1].split();
     expected = [int(el) for el in number_strings]
-    result2 = searchCOS("indexdir",ix,text,100)
+    result2 = searchCOS("indexdir",text,100)
     score2 = score(result2,expected)
     score2["query"]=text
     average["Pr"]+=score2["Pr"]
@@ -72,7 +72,7 @@ for i in range(0,len(lines2)/2):
     text = stop(unicode(lines2[i*2+0]));
     number_strings = lines2[i*2+1].split();
     expected = [int(el) for el in number_strings]
-    result2 = searchBM25("indexdir2",ix2,text,100)
+    result2 = searchBM25("indexdir2",text,100)
     score2 = score(result2,expected)
     score2["query"]=text
     average["Pr"]+=score2["Pr"]
