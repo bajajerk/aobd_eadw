@@ -8,9 +8,11 @@ import urlparse
 
 from bson.objectid import ObjectId
 from pymongo.mongo_client import MongoClient
+from whoosh import scoring
 from whoosh.index import open_dir
 from whoosh.qparser.default import MultifieldParser
 from whoosh.qparser.syntax import OrGroup
+from whoosh.scoring import BM25F, TF_IDF
 
 
 __version__ = "0.6"
@@ -27,6 +29,30 @@ except ImportError:
 client = MongoClient('localhost', 27017)
 db = client['eadw_proj']
 news = db['news']
+
+
+
+
+class TimeWeight(scoring.WeightingModel):        
+    class TimeScorer(scoring.BaseScorer):
+        def __init__(self, idfScorer,bm25Scorer,searcher):
+            self.idfScorer = idfScorer
+            self.bm25Scorer = bm25Scorer
+            self.searcher = searcher
+    
+        def score(self, matcher):
+            obj = self.searcher.stored_fields(matcher.id())
+            s = self.bm25Scorer.score(matcher)*0.5+self.idfScorer.score(matcher)*0.5
+            return s
+        
+
+
+    def scorer(self, searcher, fieldname, text, qf=1):
+        # BM25
+        bm25Scorer = BM25F().scorer(searcher, fieldname, text, qf) 
+        tfidfScorer = TF_IDF().scorer(searcher, fieldname, text, qf)
+        return self.TimeScorer(tfidfScorer,bm25Scorer,searcher)
+
 
 class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
@@ -56,7 +82,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
      
     def search(self, query):
-        ix = open_dir("index")
+        ix = open_dir("news")
         if "s" in query.keys():
             s = query["s"][0]
         else:
@@ -65,11 +91,13 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     
         ret = {"r":[],"s":[]}
         with ix.searcher() as searcher:
+            
             parser = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(s,"UTF-8"))
             results = searcher.search(parser, limit=100)
             for r in results:
+                
                 post = news.find_one({"_id":ObjectId(r["id"])})
-                ret["r"].append({"t":post["t"],"d":post["d"],"p":post["p"],"l":post["l"]})
+                ret["r"].append({"t":post["t"],"d":post["d"],"p":post["p"],"l":post["l"],"e":r["tags"]})
         
         
             corrector = searcher.corrector("d")

@@ -35,8 +35,21 @@
 						  	html += "<article>";
 						  	html += "<h1>"+json.r[i].t+"</h1>";
 						  	html += "<p>Published: <time>"+json.r[i].p+"</time></p>";
-						  	html += json.r[i].d;
+						  	var description = json.r[i].d;
+						  	
+						  	html += description;
 						  	html += "<p><a href='"+json.r[i].l+"'>read more</a></p>";
+								var entities = "";				
+								obj = JSON.parse(json.r[i].e);
+								
+						  	for (var key in  obj){
+						  			entities += "<a class='tag' href='"+obj[key] +"'>"+ key+ "</a>";
+						  		
+						  	}
+								
+								
+								
+						  	html += "<p><b>Entities:</b>"+entities+"</p>";
 						  	html += "</article>";				  		
 					  	}
 				  	}
@@ -69,6 +82,14 @@
 		padding:16px;
 	}
 	
+	.tag {
+		margin:2px;
+		padding: 2px;
+    border: 1px solid;
+    border-color: black;
+    border-radius: 2px;
+    background-color: white;
+	}
 
 	nav {
 	  text-align: center;

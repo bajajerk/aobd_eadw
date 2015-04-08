@@ -185,3 +185,39 @@ def searchL2R(dir,query,lim,rank,w):
         
         
     return res
+
+
+
+def searchTime(dir,query,lim):
+    index = open_dir(dir)
+    
+    class TimeScorer(scoring.BaseScorer):
+        def __init__(self, idfScorer,bm25Scorer):
+            self.idfScorer = idfScorer
+            self.bm25Scorer = bm25Scorer
+    
+        def score(self, matcher):
+
+            s = self.bm25Scorer.score(matcher)*0.5+self.idfScorer.score(matcher)*0.5
+            return s
+        
+
+    class TimeWeight(scoring.WeightingModel):        
+        def scorer(self, searcher, fieldname, text, qf=1):
+            # BM25
+            bm25Scorer = BM25F().scorer(searcher, fieldname, text, qf) 
+            tfidfScorer = TF_IDF().scorer(searcher, fieldname, text, qf)
+            
+            return TimeScorer(tfidfScorer,bm25Scorer)
+    
+    res = []   
+    
+    with index.searcher(weighting=TimeScorer()) as searcher:
+        query = QueryParser("content", index.schema, group=OrGroup).parse(unicode(query,"UTF-8"))
+        results = searcher.search(query, limit=lim)
+        for r in results:
+            res.append(r["id"])
+        
+        
+    return res
+
