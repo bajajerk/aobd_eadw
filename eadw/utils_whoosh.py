@@ -1,12 +1,12 @@
-from whoosh import scoring
+from whoosh import scoring, analysis
 from whoosh.analysis.analyzers import SimpleAnalyzer
 from whoosh.analysis.filters import LowercaseFilter, StopFilter
 from whoosh.analysis.tokenizers import SpaceSeparatedTokenizer
+from whoosh.compat import iteritems
 from whoosh.fields import NUMERIC, TEXT, Schema
 from whoosh.index import open_dir, create_in
 from whoosh.qparser.default import QueryParser
 from whoosh.qparser.syntax import OrGroup
-from whoosh.compat import iteritems
 from whoosh.scoring import BM25F, TF_IDF
 
 
@@ -147,6 +147,16 @@ def searchPageRank(dir,query,lim,rank):
         
     return res
 
+
+class CaseSensitivizer(analysis.Filter):
+    def __call__(self, tokens):
+        for t in tokens:
+            yield t
+            if t.mode == "index":
+               low = t.text.lower()
+               if low != t.text:
+                   t.text = low
+                   yield t
 
 def searchL2R(dir,query,lim,rank,w):
     index = open_dir(dir)

@@ -77,7 +77,11 @@ for post in result:
                     name = e["name"]
                     url = e["url"]
                     opt = e["opt"]
-                    if name not in tags.keys() and name in dpt and (len(opt)==0 or opt in dpt):
+                    
+                    if word== name and len(opt)==0:
+                       # print word,"|",name,"|",opt
+                        tags[name]=url
+                    elif name not in tags.keys() and name in dpt and (len(opt)==0 or opt in dpt):
                         tags[name]=url
                             
     
@@ -88,7 +92,7 @@ for post in result:
 
     last_post = post
     i+=1
-    if i>=1000:
+    if i>=3000:
         break
 
 
