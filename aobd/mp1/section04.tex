@@ -36,23 +36,22 @@
 
 	With each I/O operation requiring a seek and a block transfer.
 
-	\iffalse
-		Database System Concepts, Pag 542
-	\fi
+
+	% Database System Concepts, Pag 542
+	
 
 	\subsection{}
 	{\color{gray} Block Nested Loop Join, with CheeseProvenance as the outer relation and the join condition is on region-name. Present the costs of the worst and best cases.}
 	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
 
 	Worst case:
-	\begin{equation}Cost = (b_r * b_s + b_r) $block transfers$ + (2 * b_r) $seeks$\end{equation}
-
+	\begin{equation}Cost = (b_r * b_s + b_r) $block transfers$\end{equation}
+	%  (+ 2 * b_r $seeks$)
 	Best case (if $b_r$ and $b_s$ fits in memory):
-	\begin{equation}Cost = (b_r + b_s) $block transfers$+ 2 $seeks$\end{equation}
+	\begin{equation}Cost = (b_r + b_s) $block transfers$\end{equation}
+	% (+ 2 $seeks$)
+	% Database System Concepts, Pag 551
 	
-	\iffalse
-		Database System Concepts, Pag 551
-	\fi
 
 	\subsection{}
 	{\color{gray}Sort-Merge Join, assuming that only the relation Location is ordered on region-name, the relation CheeseProvenance is ordered on cheese-name and that you can have 3 pages in memory when sorting the relations.}

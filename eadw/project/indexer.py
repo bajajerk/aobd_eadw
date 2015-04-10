@@ -1,9 +1,12 @@
 import json
 import os
+import time
+from xmlrpclib import DateTime
 
 from bson.objectid import ObjectId
+import feedparser
 from pymongo import MongoClient
-from whoosh.fields import ID, TEXT, Schema
+from whoosh.fields import ID, TEXT, Schema, DATETIME
 from whoosh.index import open_dir, create_in, exists_in
 from whoosh.qparser.default import QueryParser
 from whoosh.qparser.syntax import OrGroup
@@ -36,7 +39,7 @@ if not os.path.exists("news"):
 # do query for new news
 news_index = None
 if not exists_in("news"):
-    schema = Schema(id=ID(unique=True,stored=True), d=TEXT(spelling=True),t=TEXT(spelling=True),tags=TEXT(stored=True))
+    schema = Schema(id=ID(unique=True,stored=True), d=TEXT(spelling=True,stored=True),t=TEXT(spelling=True,stored=True),tags=TEXT(stored=True),time=DATETIME(stored=True))
     news_index = create_in("news", schema)
     result = news.find()
 else:
@@ -57,7 +60,8 @@ i = 0
 for post in result:
     description = post["d"]
     title = post["t"]
-    dpt = title + " "+description 
+    dpt = title + ". "+description
+    t = time.strftime(post["p"])
  
     print title
 
@@ -88,11 +92,11 @@ for post in result:
     
     
     print tags
-    news_writer.add_document(id=unicode(str(post['_id'])),d=description,t=title,tags=unicode(json.dumps(tags)))
+    news_writer.add_document(id=unicode(str(post['_id'])),d=description,t=title,tags=unicode(json.dumps(tags)),time=t)
 
     last_post = post
     i+=1
-    if i>=3000:
+    if i>=1000:
         break
 
 

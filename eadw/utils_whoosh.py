@@ -1,14 +1,14 @@
+
+
+
 from whoosh import scoring, analysis
 from whoosh.analysis.analyzers import SimpleAnalyzer
-from whoosh.analysis.filters import LowercaseFilter, StopFilter
-from whoosh.analysis.tokenizers import SpaceSeparatedTokenizer
-from whoosh.compat import iteritems
+from whoosh.analysis.filters import StopFilter
 from whoosh.fields import NUMERIC, TEXT, Schema
 from whoosh.index import open_dir, create_in
 from whoosh.qparser.default import QueryParser
 from whoosh.qparser.syntax import OrGroup
 from whoosh.scoring import BM25F, TF_IDF
-
 
 def index(dir,lines):
     schema = Schema(id = NUMERIC(stored=True), content=TEXT)
@@ -230,4 +230,3 @@ def searchTime(dir,query,lim):
         
         
     return res
-

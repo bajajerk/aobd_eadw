@@ -42,6 +42,7 @@ class TimeWeight(scoring.WeightingModel):
     
         def score(self, matcher):
             obj = self.searcher.stored_fields(matcher.id())
+            # print obj
             s = self.bm25Scorer.score(matcher)*0.5+self.idfScorer.score(matcher)*0.5
             return s
         
@@ -90,7 +91,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     
     
         ret = {"r":[],"s":[]}
-        with ix.searcher() as searcher:
+        with ix.searcher(weighting=TimeWeight()) as searcher:
             
             parser = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(s,"UTF-8"))
             results = searcher.search(parser, limit=100)
