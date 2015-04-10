@@ -13,16 +13,11 @@
 		function search(){
 			var input = document.getElementById("search");
 			var result = document.getElementById("result");
-			var suggestions = document.getElementById("suggestions");
-			result.innerHTML = input.value; 
-			
+			var suggestions = document.getElementById("suggestions");			
 			var xhr=new XMLHttpRequest();
 			
-			
-			xhr.onreadystatechange=function()
-			  {
-			  if (xhr.readyState==4 && xhr.status==200)
-			    {
+			xhr.onreadystatechange=function(){
+			  if (xhr.readyState==4 && xhr.status==200){
 				  	var json = JSON.parse(xhr.responseText);
 				  	html = "";
 				  	if (json.r.length==0){
@@ -44,22 +39,15 @@
 								
 						  	for (var key in  obj){
 						  			entities += "<a class='tag' href='"+obj[key] +"'>"+ key+ "</a>";
-						  		
-						  	}
-								
-								
-								
+						  	}				
 						  	html += "<p><b>Entities:</b>"+entities+"</p>";
 						  	html += "</article>";				  		
 					  	}
 				  	}
-				  
 				  	suggestions.innerHTML="did you said? "+ json.s;
-				  	
 				  	result.innerHTML=html;
 			    }
 			  }
-			
 			xhr.open("GET","/search?s="+input.value,true);
 			xhr.send();
 		}
@@ -74,7 +62,6 @@
 		padding-top:32px;
 	}
 	
-
 	article{
 		background: #EEEEEE;
 		margin: 16px auto;
@@ -106,6 +93,5 @@
 			display:block;
 			margin: 4px auto;
 	} 
-
 </style>
 </html>

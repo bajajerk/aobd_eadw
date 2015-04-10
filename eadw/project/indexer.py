@@ -1,10 +1,7 @@
 import json
 import os
 import time
-from xmlrpclib import DateTime
-
 from bson.objectid import ObjectId
-import feedparser
 from pymongo import MongoClient
 from whoosh.fields import ID, TEXT, Schema, DATETIME
 from whoosh.index import open_dir, create_in, exists_in
@@ -39,7 +36,12 @@ if not os.path.exists("news"):
 # do query for new news
 news_index = None
 if not exists_in("news"):
-    schema = Schema(id=ID(unique=True,stored=True), d=TEXT(spelling=True,stored=True),t=TEXT(spelling=True,stored=True),tags=TEXT(stored=True),time=DATETIME(stored=True))
+    schema = Schema(id=ID(unique=True,stored=True), 
+                    d=TEXT(spelling=True,stored=True),
+                    t=TEXT(spelling=True,stored=True),
+                    tags=TEXT(stored=True),
+                    time=DATETIME(stored=True),
+                    link=TEXT(stored=True))
     news_index = create_in("news", schema)
     result = news.find()
 else:
@@ -49,9 +51,7 @@ else:
 news_writer = news_index.writer()
 
 # do query for new entities
-entities_index = None
 entities_index = open_dir("entities")
-
 
 # index each entry here
 last_post = None
@@ -60,40 +60,36 @@ i = 0
 for post in result:
     description = post["d"]
     title = post["t"]
+    l = post["l"]
+
     dpt = title + ". "+description
     t = time.strftime(post["p"])
  
     print title
 
-    
     tags = {}
-    already={}
     
-    
-    for word in dpt.split():
-        if word not in already.keys():
-            already[word]=1
-            with entities_index.searcher() as searcher:
-                parser = QueryParser("name", entities_index.schema, group=OrGroup).parse(word)
-                results = searcher.search(parser, limit=100)
-                # Paris VS Paris Hilton - f#ck th3m 4ll
-                for e in results:
-                    name = e["name"]
-                    url = e["url"]
-                    opt = e["opt"]
-                    
-                    if word== name and len(opt)==0:
-                       # print word,"|",name,"|",opt
-                        tags[name]=url
-                    elif name not in tags.keys() and name in dpt and (len(opt)==0 or opt in dpt):
-                        tags[name]=url
-                            
-    
-    
-    
+    for word in list(set(dpt.split())):        
+        with entities_index.searcher() as searcher:
+            parser = QueryParser("name", entities_index.schema, group=OrGroup).parse(word)
+            results = searcher.search(parser, limit=100)
+            for e in results:
+                name = e["name"]
+                url = e["url"]
+                opt = e["opt"]
+                
+                if word== name and len(opt)==0:
+                    tags[name]=url
+                elif name not in tags.keys() and name in dpt and (len(opt)==0 or opt in dpt):
+                    tags[name]=url
+                        
     print tags
-    news_writer.add_document(id=unicode(str(post['_id'])),d=description,t=title,tags=unicode(json.dumps(tags)),time=t)
-
+    news_writer.add_document(id=unicode(str(post['_id'])),
+                             d=description,
+                             t=title,
+                             tags=unicode(json.dumps(tags)),
+                             time=t, 
+                             link=l)
     last_post = post
     i+=1
     if i>=1000:
