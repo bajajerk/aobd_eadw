@@ -1,7 +1,10 @@
-import feedparser
-import socket
 import json
+import socket
+import time
+
+import feedparser
 from pymongo import MongoClient
+
 
 print "#########################################################"
 print "################### STORE PROCESS #######################"
@@ -27,16 +30,15 @@ for url in feeds:
     feed = feedparser.parse( url )
     for entry in feed.entries:
         try:
-            date = entry.published
-       
+            date = time.strftime('%Y-%m-%dT%H:%M:%SZ', entry.published_parsed)
             title = entry.title
             description = entry.summary
             link =entry.link
     
             obj = news.find_one({"t":title,"p":date})
             if not obj:
+                print "\t",title,"|",date
                 news.insert({"t":title,"d":description,"l":link,"p":date})
-                print "\t",title
         except AttributeError, e:
             print "[ERROR]"
     
