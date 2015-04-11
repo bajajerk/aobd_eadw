@@ -58,43 +58,46 @@ last_post = None
 i = 0
 
 for post in result:
-    description = post["d"]
-    title = post["t"]
-    l = post["l"]
-
-    dpt = title + ". "+description
-    t = time.strftime(post["p"])
- 
-    print title
-
-    tags = {}
+    try:
+        description = post["d"]
+        title = post["t"]
+        l = post["l"]
     
-    for word in list(set(dpt.split())):        
-        with entities_index.searcher() as searcher:
-            parser = QueryParser("name", entities_index.schema, group=OrGroup).parse(word)
-            results = searcher.search(parser, limit=100)
-            for e in results:
-                name = e["name"]
-                url = e["url"]
-                opt = e["opt"]
-                
-                if word== name and len(opt)==0:
-                    tags[name]=url
-                elif name not in tags.keys() and name in dpt and (len(opt)==0 or opt in dpt):
-                    tags[name]=url
-                        
-    print tags
-    news_writer.add_document(id=unicode(str(post['_id'])),
-                             d=description,
-                             t=title,
-                             tags=unicode(json.dumps(tags)),
-                             time=t, 
-                             link=l)
-    last_post = post
+        dpt = title + ". "+description
+        t = time.strftime(post["p"])
+     
+        print title
+    
+        tags = {}
+        
+        for word in list(set(dpt.split())):        
+            with entities_index.searcher() as searcher:
+                parser = QueryParser("name", entities_index.schema, group=OrGroup).parse(word)
+                results = searcher.search(parser, limit=100)
+                for e in results:
+                    name = e["name"]
+                    url = e["url"]
+                    opt = e["opt"]
+                    
+                    if word== name and len(opt)==0:
+                        tags[name]=url
+                    elif name not in tags.keys() and name in dpt and (len(opt)==0 or opt in dpt):
+                        tags[name]=url
+                            
+        print tags
+        news_writer.add_document(id=unicode(str(post['_id'])),
+                                 d=description,
+                                 t=title,
+                                 tags=unicode(json.dumps(tags)),
+                                 time=t, 
+                                 link=l)
+        last_post = post
+    except:
+        print "EXCEPTION"
     i+=1
     if i>=1000:
         break
-
+    
 
 if last_post is not None:
     last_id["last_id"]=last_post['_id']
