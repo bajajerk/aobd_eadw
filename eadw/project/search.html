@@ -10,13 +10,19 @@
 
 	<nav>
 	<div>
-		<input type="text" id="search" onkeyup="search()">
+			<input type="text" id="search" onkeyup="search()"/>
+			<div id="suggestions"></div>
 	</div>
 	</nav>
-	<div id="suggestions"></div>
 	<div id="result" class="container theme-showcase"></div>
 	
 	<script>
+		function correct(from,to){
+			var input = document.getElementById("search");
+			input.value = input.value.replace(from, to);
+			search();
+		}
+		
 		function search(){
 			var input = document.getElementById("search");
 			var result = document.getElementById("result");
@@ -51,7 +57,25 @@
 						  	html += "</article>";				  		
 					  	}
 				  	}
-				  	suggestions.innerHTML="did you said? "+ json.s;
+				  	
+				  	var sug ="";
+				  	
+				  	console.log(json.s);
+				  	
+						suggestions.innerHTML="";
+					  
+				  	for(var i in json.s){
+
+					  	for(var j=0; j< json.s[i].length ; ++j){
+					  		sug += "<a class='tag label label-info' onclick='correct(\""+ i+"\",\""+ json.s[i][j]+"\")'>";
+					  		sug += json.s[i][j];
+					  		sug += "</a>";
+					  		suggestions.innerHTML="did you said? "+ sug;
+
+					  	}
+				  	}				  	
+				  	
+				  			
 				  	result.innerHTML=html;
 			    }
 			  }
@@ -69,6 +93,10 @@
 		padding-top:32px;
 	}
 	
+	#suggestions{
+	display:inline;
+	color:white;
+	}
 	
 	.tag {
 		margin:2px;

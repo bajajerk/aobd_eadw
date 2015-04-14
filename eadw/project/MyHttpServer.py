@@ -109,7 +109,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             w = OurWeight()
     
     
-        ret = {"r":[],"s":[]}
+        ret = {"r":[],"s":{}}
         with ix.searcher(weighting=w) as searcher:
             
             parser = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(s,"UTF-8"))
@@ -120,9 +120,13 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         
             corrector = searcher.corrector("d")
             for m in s.split():
+                sug = corrector.suggest(m, limit=3)
+                for s in sug:
+                    if m not in ret["s"].keys():
+                        ret["s"][m] = []
+                    ret["s"][m].append(s)        
         
-                ret["s"].append(corrector.suggest(m, limit=3))        
-        
+            print ret["s"]
         f = StringIO()   
         f.write(json.dumps(ret,indent=4, separators=(',', ': ')))
         length = f.tell()
