@@ -98,8 +98,19 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         else:
             s =""    
     
+        if "w" in query.keys():
+            if query["w"]=="c":
+                w = scoring.TF_IDF()
+            elif query["w"]=="b":
+                w = scoring.BM25F()
+            else:
+                w = TimeWeight()
+        else:
+            w = OurWeight()
+    
+    
         ret = {"r":[],"s":[]}
-        with ix.searcher(weighting=TimeWeight()) as searcher:
+        with ix.searcher(weighting=w) as searcher:
             
             parser = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(s,"UTF-8"))
             results = searcher.search(parser, limit=100)

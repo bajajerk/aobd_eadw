@@ -1,4 +1,11 @@
 <html>
+<head>
+		<link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/sticky-footer.css" rel="stylesheet">
+    <link href="/css/jumbotron.css" rel="stylesheet">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>  
+</head>
 <body>
 
 	<nav>
@@ -7,7 +14,7 @@
 	</div>
 	</nav>
 	<div id="suggestions"></div>
-	<div id="result"></div>
+	<div id="result" class="container theme-showcase"></div>
 	
 	<script>
 		function search(){
@@ -21,26 +28,26 @@
 				  	var json = JSON.parse(xhr.responseText);
 				  	html = "";
 				  	if (json.r.length==0){
-					  	html += "<article>";
+					  	html += "<article class='well'>";
 				  		html += "<h1 style='color:#bbbbbb'>No results for this query</h1>";
 					  	html += "</article>";				  		
 				  	}
 				  	else {				  	
 					  	for(var i= 0; i < json.r.length; ++i){
-						  	html += "<article>";
+						  	html += "<article class='well'>";
 						  	html += "<h1>"+json.r[i].t+"</h1>";
 						  	html += "<p>Published: <time>"+json.r[i].p+"</time></p>";
 						  	var description = json.r[i].d;
 						  	
-						  	html += description;
+						  	html += "<div>"+description+"</div>";
 						  	html += "<p><a href='"+json.r[i].l+"'>read more</a></p>";
 								var entities = "";				
 								obj = JSON.parse(json.r[i].e);
 								
 						  	for (var key in  obj){
-						  			entities += "<a class='tag' href='"+obj[key] +"'>"+ key+ "</a>";
+						  			entities += "<a class='tag label label-info' href='"+obj[key] +"'>"+ key+ "</a>";
 						  	}				
-						  	html += "<p><b>Entities:</b>"+entities+"</p>";
+						  	html += "<div><b>Entities:</b>"+entities+"</div>";
 						  	html += "</article>";				  		
 					  	}
 				  	}
@@ -48,7 +55,7 @@
 				  	result.innerHTML=html;
 			    }
 			  }
-			xhr.open("GET","/search?s="+input.value,true);
+			xhr.open("GET","/search?s="+input.value+"&w=t",true);
 			xhr.send();
 		}
 		search();
@@ -62,21 +69,17 @@
 		padding-top:32px;
 	}
 	
-	article{
-		background: #EEEEEE;
-		margin: 16px auto;
-		width:800px;
-		padding:16px;
-	}
 	
 	.tag {
 		margin:2px;
 		padding: 2px;
-    border: 1px solid;
-    border-color: black;
-    border-radius: 2px;
-    background-color: white;
 	}
+
+img {
+	float:none !important;
+	border:0px solid black;
+	margin:0 0 0 0;
+}
 
 	nav {
 	  text-align: center;
