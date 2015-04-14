@@ -1,9 +1,11 @@
 
 import BaseHTTPServer
+import datetime
 import json
 import os
 import shutil
 import sys
+import time
 import urlparse
 
 from whoosh import scoring
@@ -11,6 +13,8 @@ from whoosh.index import open_dir
 from whoosh.qparser.default import MultifieldParser
 from whoosh.qparser.syntax import OrGroup
 from whoosh.scoring import BM25F, TF_IDF
+
+from dateutil import parser
 
 
 __version__ = "0.6"
@@ -23,17 +27,14 @@ except ImportError:
     from StringIO import StringIO
 
 
-class TimeWeight(scoring.WeightingModel):        
-    class TimeScorer(scoring.BaseScorer):
-        def __init__(self, idfScorer,bm25Scorer,searcher):
+class OurWeight(scoring.WeightingModel):        
+    class Scorer(scoring.BaseScorer):
+        def __init__(self, idfScorer,bm25Scorer):
             self.idfScorer = idfScorer
             self.bm25Scorer = bm25Scorer
-            self.searcher = searcher
-    
+       
         def score(self, matcher):
-            obj = self.searcher.stored_fields(matcher.id())
-            # print obj
-            s = self.bm25Scorer.score(matcher)*0.5+self.idfScorer.score(matcher)*0.5
+            s = (self.bm25Scorer.score(matcher)*0.5+self.idfScorer.score(matcher)*0.5)
             return s
         
 
@@ -42,7 +43,23 @@ class TimeWeight(scoring.WeightingModel):
         # BM25
         bm25Scorer = BM25F().scorer(searcher, fieldname, text, qf) 
         tfidfScorer = TF_IDF().scorer(searcher, fieldname, text, qf)
-        return self.TimeScorer(tfidfScorer,bm25Scorer,searcher)
+        return self.Scorer(tfidfScorer,bm25Scorer)
+
+class TimeWeight(scoring.WeightingModel):        
+    class Scorer(scoring.BaseScorer):
+        def __init__(self, searcher):
+            self.searcher = searcher
+    
+        def score(self, matcher):
+            obj = self.searcher.stored_fields(matcher.id())
+            t = time.mktime(parser.parse(obj["time"]).timetuple())
+            n = time.mktime(datetime.datetime.now().timetuple())
+            return t-n
+        
+
+
+    def scorer(self, searcher, fieldname, text, qf=1):
+        return self.Scorer(searcher)
 
 
 class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):

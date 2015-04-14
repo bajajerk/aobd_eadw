@@ -1,3 +1,9 @@
+
+
+	{\color{gray}Consider the problem of inserting the following keys, in the given order, into an empty B+-tree where nodes can hold up to 3 values:}
+	
+	{\color{gray}Parmesão, Ilha, Camembert, Fresco, Requeijão, Azeitão, Alverca, Serra, Alcobaça, Roquefort, Flamengo, Emmental, Évora, Creme, Serpa, Quark}
+
 1 - Alcobaça
 
 2 - Alverca
@@ -30,14 +36,13 @@
 
 16 - Serra
 
-	{\color{gray}Consider the problem of inserting the following keys, in the given order, into an empty B+-tree where nodes can hold up to 3 values:}
-	
-	{\color{gray}Parmesão, Ilha, Camembert, Fresco, Requeijão, Azeitão, Alverca, Serra, Alcobaça, Roquefort, Flamengo, Emmental, Évora, Creme, Serpa, Quark}
-
 	\subsection{}
 	{\color{gray}Draw the tree after each insertion.}
  		Insertion order: 1, 10, 4, 9, 13, 3, 2, 16, 1, 14, 8, 6, 7, 5, 15, 12
 
+
+
+\textbf{Insert 11 (Parmesão)}
 \begin{center}
 \begin{tikzpicture}
 \tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
@@ -48,7 +53,7 @@
 ;\end{tikzpicture}
 \end{center}
 
-
+\textbf{Insert 10 (Ilha)}
 \begin{center}
 \begin{tikzpicture}
 \tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
@@ -59,7 +64,7 @@
 ;\end{tikzpicture}
 \end{center}
 
-
+\textbf{Insert 4 (Camembert)}
 \begin{center}
 \begin{tikzpicture}
 \tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
@@ -74,6 +79,7 @@
 \end{tikzpicture}
 \end{center}
 
+\textbf{Insert 9 (Fresco)}
 \begin{center}
 \begin{tikzpicture}
 \tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
@@ -88,6 +94,7 @@
 \end{tikzpicture}
 \end{center}
 
+\textbf{Insert 13 (Requeijão)}
 \begin{center}
 \begin{tikzpicture}
 \tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
@@ -104,32 +111,571 @@
 \end{tikzpicture}
 \end{center}
 
+\textbf{Insert 3 (Azeitão)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=30mm]
+\tikzstyle{level 2}=[sibling distance=15mm]
+\node {10} [-]
+  child {node (a) {4}
+    child {node (b) {3}}
+    child {node (c) {4 \nodepart{two} 9}}
+  } 
+  child {node (d) {11}
+    child {node (e) {10}}
+    child {node (f) {11 \nodepart{two} 13}}
+  }
+;
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (e);
+\draw[->] (e) -- (f);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 2 (Alverca)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=30mm]
+\tikzstyle{level 2}=[sibling distance=15mm]
+\node {10} [-]
+  child {node (a) {4}
+    child {node (b) {2 \nodepart{two} 3}}
+    child {node (c) {4 \nodepart{two} 9}}
+  } 
+  child {node (d) {11}
+    child {node (e) {10}}
+    child {node (f) {11 \nodepart{two} 13}}
+  }
+;
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (e);
+\draw[->] (e) -- (f);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 16 (Serra)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=15mm]
+\node {10} [-]
+  child {node (a) {4}
+    child {node (b) {2 \nodepart{two} 3}}
+    child {node (c) {4 \nodepart{two} 9}}
+  } 
+  child {node (d) {11 \nodepart{two} 13}
+    child {node (e) {10}}
+    child {node (f) {11}}
+    child {node (g) {13 \nodepart{two} 16}}
+  }
+;
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 1 (Alcobaça)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {2 \nodepart{two} 4}
+    child {node (a) {1}}
+    child {node (b) {2 \nodepart{two} 3}}
+    child {node (c) {4 \nodepart{two} 9}}
+  } 
+  child {node {11 \nodepart{two} 13}
+    child {node (d) {10}}
+    child {node (e) {11}}
+    child {node (f) {13 \nodepart{two} 16}}
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 14 (Roquefort)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=40mm]
+\tikzstyle{level 2}=[sibling distance=15mm]
+\node {10 \nodepart{two} 13} [-]
+  child {node (a) {2 \nodepart{two} 4}
+    child {node (b) {1}}
+    child {node (c) {2 \nodepart{two} 3}}
+    child {node (d) {4 \nodepart{two} 9}}
+  } 
+  child {node (e) {11}
+    child {node (f) {10}}
+    child {node (g) {11}}
+  }
+  child {node (h) {14}
+    child {node (i) {13}}
+    child {node (j) {14 \nodepart{two} 16}}
+  }
+;
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (i);
+\draw[->] (i) -- (j);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 8 (Flamengo)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=60mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {8}
+        child {node (c) {4}}
+        child {node (d) {8 \nodepart{two} 9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (e) {10}}
+       child {node (f) {11}}
+    }
+    child {node {14}
+        child {node (g) {13}}
+        child {node (h) {14 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 6 (Emmental)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=60mm]
+\tikzstyle{level 2}=[sibling distance=30mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {8}
+        child {node (c) {4 \nodepart{two} 6}}
+        child {node (d) {8 \nodepart{two} 9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (e) {10}}
+       child {node (f) {11}}
+    }
+    child {node {14}
+        child {node (g) {13}}
+        child {node (h) {14 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+\textbf{Insert 7 (Évora)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=75mm]
+\tikzstyle{level 2}=[sibling distance=40mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {6 \nodepart{two} 8}
+        child {node (c) {4}}
+        child {node (d) {6 \nodepart{two} 7}}
+        child {node (e) {8 \nodepart{two} 9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {10}}
+       child {node (g) {11}}
+    }
+    child {node {14}
+        child {node (h) {13}}
+        child {node (i) {14 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 5 (Creme)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=75mm]
+\tikzstyle{level 2}=[sibling distance=40mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {6 \nodepart{two} 8}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {6 \nodepart{two} 7}}
+        child {node (e) {8 \nodepart{two} 9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {10}}
+       child {node (g) {11}}
+    }
+    child {node {14}
+        child {node (h) {13}}
+        child {node (i) {14 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+\textbf{Insert 15 (Serpa)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=80mm]
+\tikzstyle{level 2}=[sibling distance=45mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {6 \nodepart{two} 8}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {6 \nodepart{two} 7}}
+        child {node (e) {8 \nodepart{two} 9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {10}}
+       child {node (g) {11}}
+    }
+    child {node {14 \nodepart{two} 15}
+        child {node (h) {13}}
+        child {node (i) {14}}
+        child {node (j) {15 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\draw[->] (i) -- (j);
+
+\end{tikzpicture}
+\end{center}
+
+\textbf{Insert 12 (Quark)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=80mm]
+\tikzstyle{level 2}=[sibling distance=45mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {10} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {6 \nodepart{two} 8}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {6 \nodepart{two} 7}}
+        child {node (e) {8 \nodepart{two} 9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {10}}
+       child {node (g) {11 \nodepart{two} 12}}
+    }
+    child {node {14 \nodepart{two} 15}
+        child {node (h) {13}}
+        child {node (i) {14}}
+        child {node (j) {15 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\draw[->] (i) -- (j);
+\end{tikzpicture}
+\end{center}
 
 	\subsection{}
 	{\color{gray}Delete the following keys from the B+tree data structure from the previous exercise: Ilha; Flamengo; Emmental; Serpa. Draw the tree after each deletion.}
 
  		Deletion order: 10, 8, 6, 15
 
-
-
+\textbf{Delete 10 (Ilha)}
 \begin{center}
 \begin{tikzpicture}
 \tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
 \tikzstyle{every node}=[bplus]
-\tikzstyle{level 1}=[sibling distance=60mm]
-\tikzstyle{level 2}=[sibling distance=15mm]
-\node {11} [->]
-  child {node {3 \nodepart{two} 7}
-    child {node {1 \nodepart{two} 2}}
-    child {node {4 \nodepart{two} 6}}
-    child {node {8 \nodepart{two} 9}}    
+\tikzstyle{level 1}=[sibling distance=80mm]
+\tikzstyle{level 2}=[sibling distance=45mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {11} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {6 \nodepart{two} 8}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {6 \nodepart{two} 7}}
+        child {node (e) {8 \nodepart{two} 9}}
+    }
   } 
-  child {node {21 \nodepart{two} 28 \nodepart{three} 32 \nodepart{four} 50}
-    child {node {17 \nodepart{two} 20}}
-    child {node {22 \nodepart{two} 25}}
-    child {node {28 \nodepart{two} 30}}    
-    child[sibling distance=25mm] {node {34 \nodepart{two} 38 \nodepart{three} 44 \nodepart{four} 47}}    
-    child[sibling distance=25mm] {node {53 \nodepart{two} 54 \nodepart{three} 60 \nodepart{four} 88}}    
+  child {node {13}
+    child {node {11}
+       child {node (f) {11}}
+       child {node (g) {12}}
+    }
+    child {node {14 \nodepart{two} 16}
+        child {node (h) {13}}
+        child {node (i) {14}}
+        child {node (j) {15 \nodepart{two} 16}}
+    }
   }
-;\end{tikzpicture}
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\draw[->] (i) -- (j);
+\end{tikzpicture}
 \end{center}
+
+\newpage
+\textbf{Delete 8 (Flamengo)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=80mm]
+\tikzstyle{level 2}=[sibling distance=45mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {11} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {6 \nodepart{two} 9}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {6 \nodepart{two} 7}}
+        child {node (e) {9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {11}}
+       child {node (g) {12}}
+    }
+    child {node {14 \nodepart{two} 16}
+        child {node (h) {13}}
+        child {node (i) {14}}
+        child {node (j) {15 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\draw[->] (i) -- (j);
+\end{tikzpicture}
+\end{center}
+
+\textbf{Delete 6 (Emmental)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=80mm]
+\tikzstyle{level 2}=[sibling distance=45mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {11} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {7 \nodepart{two} 9}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {7}}
+        child {node (e) {9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {11}}
+       child {node (g) {12}}
+    }
+    child {node {14 \nodepart{two} 16}
+        child {node (h) {13}}
+        child {node (i) {14}}
+        child {node (j) {15 \nodepart{two} 16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\draw[->] (i) -- (j);
+\end{tikzpicture}
+\end{center}
+
+\newpage
+\textbf{Delete 15 (Serpa)}
+\begin{center}
+\begin{tikzpicture}
+\tikzstyle{bplus}=[rectangle split, rectangle split horizontal,rectangle split ignore empty parts,draw]
+\tikzstyle{every node}=[bplus]
+\tikzstyle{level 1}=[sibling distance=80mm]
+\tikzstyle{level 2}=[sibling distance=45mm]
+\tikzstyle{level 3}=[sibling distance=15mm]
+\node {11} [-]
+  child {node {4}
+    child {node {2}
+       child {node (a) {1}}
+       child {node (b) {2 \nodepart{two} 3}}
+    }
+    child {node {7 \nodepart{two} 9}
+        child {node (c) {4 \nodepart{two} 5}}
+        child {node (d) {7}}
+        child {node (e) {9}}
+    }
+  } 
+  child {node {13}
+    child {node {11}
+       child {node (f) {11}}
+       child {node (g) {12}}
+    }
+    child {node {14 \nodepart{two} 16}
+        child {node (h) {13}}
+        child {node (i) {14}}
+        child {node (j) {16}}
+    }
+  }
+;
+\draw[->] (a) -- (b);
+\draw[->] (b) -- (c);
+\draw[->] (c) -- (d);
+\draw[->] (d) -- (e);
+\draw[->] (e) -- (f);
+\draw[->] (f) -- (g);
+\draw[->] (g) -- (h);
+\draw[->] (h) -- (i);
+\draw[->] (i) -- (j);
+\end{tikzpicture}
+\end{center}
+
+
