@@ -8,13 +8,16 @@ import sys
 import time
 import urlparse
 
+from dateutil import parser
+from py2neo.core import Graph
 from whoosh import scoring
 from whoosh.index import open_dir
 from whoosh.qparser.default import MultifieldParser
 from whoosh.qparser.syntax import OrGroup
 from whoosh.scoring import BM25F, TF_IDF
 
-from dateutil import parser
+
+graph = Graph("http://neo4j:qazokm@localhost:7474/db/data/")
 
 
 __version__ = "0.6"
@@ -74,6 +77,8 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         """Serve a GET request."""
         if self.path.startswith("/search"):
             f = self.search(query)
+        elif self.path.startswith("/relation"):
+            f = self.relation(query)            
         elif self.path == "/":
             f = self.getFile("search.html")
         else:
@@ -91,6 +96,38 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if f:
             f.close()
 
+    def relation(self, query):
+        if "f" in query.keys():
+            fff = query["f"][0]
+        else:
+            fff =""  
+        if "t" in query.keys():
+            ttt = query["t"][0]
+        else:
+            ttt =""  
+    
+        print fff,"VS",ttt
+        
+        res = []
+        for record in graph.cypher.execute("MATCH (beginning {N:'"+fff+"'}), (end {N:'"+ttt+"'}) MATCH p = shortestPath(beginning-[*..10]-end) RETURN p"):
+           for row in record:
+               for col in row:
+                   res.append(str(col))
+           
+           break 
+            
+            
+        f = StringIO()   
+        f.write(json.dumps(res,indent=4))
+        length = f.tell()
+        f.seek(0)
+        self.send_response(200)
+        encoding = sys.getfilesystemencoding()
+        self.send_header("Content-type", "text/html; charset=%s" % encoding)
+        self.send_header("Content-Length", str(length))
+        self.end_headers()
+        return f   
+    
     def search(self, query):
         ix = open_dir("news")
         if "s" in query.keys():
@@ -106,16 +143,16 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             else:
                 w = TimeWeight()
         else:
-            w = OurWeight()
-    
+            w = OurWeight()    
     
         ret = {"r":[],"s":{}}
-        with ix.searcher(weighting=w) as searcher:
+        with ix.searcher() as searcher:
             
             parser = MultifieldParser(["t","d"], ix.schema, group=OrGroup).parse(unicode(s,"UTF-8"))
             results = searcher.search(parser, limit=100)
             for r in results:
-                ret["r"].append({"t":r["t"],"d":r["d"],"p":r["time"],"l":r["link"],"e":r["tags"]})
+             
+                ret["r"].append({"t":r["t"],"d":r["d"],"p":r["time"],"l":r["link"],"e":r["tags"],"r":r["tags"]})
         
         
             corrector = searcher.corrector("d")
