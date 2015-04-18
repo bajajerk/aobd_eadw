@@ -1,128 +1,156 @@
 <html>
 <head>
-		<link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/sticky-footer.css" rel="stylesheet">
-    <link href="/css/jumbotron.css" rel="stylesheet">
-    <script src="/js/jquery.js"></script>
-    <script src="/js/bootstrap.js"></script>  
+<link href="/css/bootstrap.css" rel="stylesheet">
+<link href="/css/sticky-footer.css" rel="stylesheet">
+<link href="/css/jumbotron.css" rel="stylesheet">
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.js"></script>
 </head>
 <body>
 
 	<nav>
-	<div>
-			<input type="text" id="search" onkeyup="search()"/>
+		<div>
+			<input type="text" id="search" onkeydown="if(event.keyCode==13){search()}" />
 			<div id="suggestions"></div>
-	</div>
+		</div>
 	</nav>
 	<div id="result" class="container theme-showcase"></div>
-	
+
 	<script>
-		function correct(from,to){
-			var input = document.getElementById("search");
+		var input = document.getElementById("search");
+		var result = document.getElementById("result");
+		var suggestions = document.getElementById("suggestions");
+	
+	
+		function correct(from, to) {
 			input.value = input.value.replace(from, to);
 			search();
 		}
-		
-		function search(){
-			var input = document.getElementById("search");
-			var result = document.getElementById("result");
-			var suggestions = document.getElementById("suggestions");			
-			var xhr=new XMLHttpRequest();
-			
-			xhr.onreadystatechange=function(){
-			  if (xhr.readyState==4 && xhr.status==200){
-				  	var json = JSON.parse(xhr.responseText);
-				  	html = "";
-				  	if (json.r.length==0){
-					  	html += "<article class='well'>";
-				  		html += "<h1 style='color:#bbbbbb'>No results for this query</h1>";
-					  	html += "</article>";				  		
-				  	}
-				  	else {				  	
-					  	for(var i= 0; i < json.r.length; ++i){
-						  	html += "<article class='well'>";
-						  	html += "<h1>"+json.r[i].t+"</h1>";
-						  	html += "<p>Published: <time>"+json.r[i].p+"</time></p>";
-						  	var description = json.r[i].d;
-						  	
-						  	html += "<div>"+description+"</div>";
-						  	html += "<p><a href='"+json.r[i].l+"'>read more</a></p>";
-								var entities = "";				
-								obj = JSON.parse(json.r[i].e);
-								
-						  	for (var key in  obj){
-						  			entities += "<a class='tag label label-info' href='"+obj[key] +"'>"+ key+ "</a>";
-						  	}				
-						  	html += "<div><b>Entities:</b>"+entities+"</div>";
-						  	html += "</article>";				  		
-					  	}
-				  	}
-				  	
-				  	var sug ="";
-				  	
-				  	console.log(json.s);
-				  	
-						suggestions.innerHTML="";
-					  
-				  	for(var i in json.s){
 
-					  	for(var j=0; j< json.s[i].length ; ++j){
-					  		sug += "<a class='tag label label-info' onclick='correct(\""+ i+"\",\""+ json.s[i][j]+"\")'>";
-					  		sug += json.s[i][j];
-					  		sug += "</a>";
-					  		suggestions.innerHTML="did you said? "+ sug;
+		function relation(f, t) {
 
-					  	}
-				  	}				  	
-				  	
-				  			
-				  	result.innerHTML=html;
-			    }
-			  }
-			xhr.open("GET","/search?s="+input.value+"&w=t",true);
+			var xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					alert(xhr.responseText);
+				
+				//	result.innerHTML = html;
+				}
+			}
+			xhr.open("GET", "/relation?f=" + f + "&t=" + t, true);
+			xhr.send();
+
+		}
+
+		function search() {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var json = JSON.parse(xhr.responseText);
+					html = "";
+					if (json.r.length == 0) {
+						html += "<article class='well'>";
+						html += "<h1 style='color:#bbbbbb'>No results for this query</h1>";
+						html += "</article>";
+					} 
+					else {
+						for (var i = 0; i < json.r.length; ++i) {
+							var article = json.r[i];
+							
+							html += "<article class='well'>";
+							html += "<h1>" + article.t + "</h1>";
+							html += "<p>Published: <time>" + article.p + "</time></p>";
+							html += "<div>" + article.d + "</div>";
+							html += "<p><a href='"+article.l+"'>read more</a></p>";
+							var entities = "";
+							obj = JSON.parse(article.e);
+
+							for ( var key in obj) {
+								entities += "<a class='tag label label-info' href='"+obj[key] +"'>"	+ key + "</a>";
+							}
+							html += "<div><b>Entities:</b>" + entities + "</div>";
+
+							var relations = "";
+							var arr = Object.keys(obj);
+							
+							for (var j=0; j< arr.length ; ++j){
+							for (var k=j+1; k< arr.length ; ++k){
+								var key1 = arr[j];
+								var key2 = arr[k];
+								relations += "<a class='tag label label-info' onclick='relation(\""+key1+"\",\""+key2+"\")'>"+ key1+" | "+ key2+ "</a>";
+							}	
+							}						  	
+							 
+							html += "<div><b>Relations:</b>" + relations
+									+ "</div>";
+
+							html += "</article>";
+						}
+					}
+
+					var sug = "";
+
+
+					suggestions.innerHTML = "";
+
+					for ( var i in json.s) {
+
+						for (var j = 0; j < json.s[i].length; ++j) {
+							sug += "<a class='tag label label-info' onclick='correct(\""
+									+ i + "\",\"" + json.s[i][j] + "\")'>";
+							sug += json.s[i][j];
+							sug += "</a>";
+							suggestions.innerHTML = "did you said? " + sug;
+
+						}
+					}
+
+					result.innerHTML = html;
+				}
+			}
+			xhr.open("GET", "/search?s=" + input.value + "", true);
 			xhr.send();
 		}
 		search();
-
-		</script>
+	</script>
 </body>
 
 <style>
-	body{
-		margin: 0px;
-		padding-top:32px;
-	}
-	
-	#suggestions{
-	display:inline;
-	color:white;
-	}
-	
-	.tag {
-		margin:2px;
-		padding: 2px;
-	}
-
-img {
-	float:none !important;
-	border:0px solid black;
-	margin:0 0 0 0;
+body {
+	margin: 0px;
+	padding-top: 32px;
 }
 
-	nav {
-	  text-align: center;
-	
-		margin:0px;
-		background: #333333;
-		width: 100%;
-		top: 0px;
-		position: fixed;
-		display: inline-block;
-	}
-	
-	nav div {
-			display:block;
-			margin: 4px auto;
-	} 
+#suggestions {
+	display: inline;
+	color: white;
+}
+
+.tag {
+	margin: 2px;
+	padding: 2px;
+}
+
+img {
+	float: none !important;
+	border: 0px solid black;
+	margin: 0 0 0 0;
+}
+
+nav {
+	text-align: center;
+	margin: 0px;
+	background: #333333;
+	width: 100%;
+	top: 0px;
+	position: fixed;
+	display: inline-block;
+}
+
+nav div {
+	display: block;
+	margin: 4px auto;
+}
 </style>
 </html>
