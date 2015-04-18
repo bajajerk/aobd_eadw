@@ -8,6 +8,7 @@
 \usepackage{color}
 \usepackage{makeidx}
 \usepackage{blindtext}
+\usepackage[table]{xcolor}% http://ctan.org/pkg/xcolor
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{mathtools}
@@ -40,6 +41,32 @@
   breakatwhitespace=true
   tabsize=3
 }
+
+  \newcommand{\onenode}[1]{%
+    \begin{tabular}{|c|}
+      \hline #1\\ \hline
+    \end{tabular}
+  }
+  \newcommand{\twonode}[2]{%
+    \begin{tabular}{|c|c|}
+      \hline #1 & #2\\ \hline
+    \end{tabular}
+  }
+  \newcommand{\threenode}[3]{%
+    \begin{tabular}{|c|c|c|}
+      \hline #1 & #2 & #3\\ \hline
+    \end{tabular}
+  }
+  \newcommand{\fournode}[4]{%
+    \begin{tabular}{|c|c|c|c|}
+      \hline #1 & #2 & #3 & #4\\ \hline
+    \end{tabular}
+  }
+  \newcommand{\fivenode}[5]{%
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline #1 & #2 & #3 & #4 & #5\\ \hline
+    \end{tabular}
+  }
 
 \usepackage{titlesec}
 \titleformat{\section}{\hrule \large\bfseries}{\thesection}{1em}{}

@@ -1,0 +1,31 @@
+{\color{gray} Consider the two relations of Question 4. Consider also the following information, regarding the two relations:}
+
+\tab {\color{gray} $V(climate,Location)=20$}
+
+{\color{gray} Estimate the number of tuples that results from the expression:}
+
+\tab {\color{gray} $CheeseProvenance \bowtie(\sigma_{climate='dry'} Location)$}
+
+For $\sigma_{climate='dry'} Location$
+ 
+\tab 2300 Location blocks
+
+\tab 100 Tuples for each Location block
+
+\tab $n_{Location} = 2300 \times 100 = 230000 $
+
+\tab $n_{Dry Location} = \frac{n_{Location}}{ V(climate, Location)}=\frac{230000}{20} = 11500 $
+
+% R ∩ S in S is a foreign key in S referencing R
+$Location ∩ CheeseProvenance$ is a foreign key in $CheeseProvenance$ referencing $Location$ implies that the number of tuples resulting from $Location \bowtie CheeseProvenance$ is exactly the same as the number of tuples in $CheeseProvenance$
+ 
+\tab 1000 CheeseProvenance blocks
+
+\tab 120 Tuples for each CheeseProvenance block
+
+\tab $n_{CheeseProvenance} = 1000 \times 120 = 120000 $
+
+We know that, $(\sigma_{climate='dry'} Location) \bowtie CheeseProvenance$ produces the same results as $\sigma_{climate='dry'} (Location \bowtie CheeseProvenance)$
+
+\tab $n_{Result} = \frac{n_{CheeseProvenance}}{ V(climate, Location)}=\frac{120000}{20} = 6000 $
+

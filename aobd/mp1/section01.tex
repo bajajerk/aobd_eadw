@@ -21,10 +21,47 @@ LOG ON (
 	FILENAME = 'd:\data\NutrientsLog.ldf',
 	SIZE = 25MB, MAXSIZE = 250MB, FILEGROWTH = 50% );
 \end{lstlisting}
+%\lstinputlisting{mp1-Ex1-a.sql}
 
 	\subsection{}
 	{\color{gray}Create a table named Cheese in the NutrientsDB database. The table should have a numeric attribute named cheeseID, that identifies the individual records, an alphanumeric attribute named Type, and four other numeric attributes named Calories, Proteins, Carbohidrates, and Fat. The table should be partitioned so that all tuples where cheeseID is less or equal than 50 are physically stored in the primary filegroup, all tuples where the cheeseID is greater than 50, but less or equal than 100, are physically stored in the first secondary filegroup, and the remaining tuples are physically stored in the second secondary filegroup.}
 
+\begin{lstlisting}
+USE NutrientsDB;
+
+CREATE PARTITION FUNCTION NutrientsPartitionFunction(NUMERIC)
+AS RANGE LEFT FOR VALUES(50, 100);
+
+CREATE PARTITION SCHEME NutrientsScheme
+AS PARTITION NutrientsPartitionFunction
+TO ([PRIMARY], NutrientsDB_02, NutrientsDB_03);
+
+CREATE TABLE Cheese (
+  cheeseID NUMERIC PRIMARY KEY,
+  Type NVARCHAR(25),
+  Calories NUMERIC,
+  Proteins NUMERIC,
+  Carbohidrates NUMERIC,
+  Fat NUMERIC
+) ON NutrientsScheme(cheeseID);
+\end{lstlisting}
+
 	\subsection{}
 	{\color{gray}In the table named Cheese, the amount of calories is stored in an attribute named Calories, in Kcals per 100 grams. Create an index over the table with a search key corresponding to the calories in cals per 100 grams, including the amount of protein and fat as additional attributes that are not part of the search key. The index should be physically stored in the primary filegroup. Indicate also if the index is clustered or non-clustered, justifying.}
+
+\begin{lstlisting}
+USE NutrientsDB;
+CREATE NONCLUSTERED INDEX Nutrients_Calories_IX
+ON Cheese(Calories)
+INCLUDE (Proteins, Fat)
+ON [PRIMARY];
+\end{lstlisting}
+
+
+
+
+	O índice deve ser non-clustered, pois os valores presentes na coluna Calories não têm critério de ordenação.
+
+
+
 
