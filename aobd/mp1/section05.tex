@@ -6,6 +6,8 @@
 
 \tab {\color{gray} $CheeseProvenance \bowtie(\sigma_{climate='dry'} Location)$}
 
+\bigskip
+
 For $\sigma_{climate='dry'} Location$
  
 \tab 2300 Location blocks
@@ -16,6 +18,8 @@ For $\sigma_{climate='dry'} Location$
 
 \tab $n_{Dry Location} = \frac{n_{Location}}{ V(climate, Location)}=\frac{230000}{20} = 11500 $
 
+\bigskip
+
 % R ∩ S in S is a foreign key in S referencing R
 $Location ∩ CheeseProvenance$ is a foreign key in $CheeseProvenance$ referencing $Location$ implies that the number of tuples resulting from $Location \bowtie CheeseProvenance$ is exactly the same as the number of tuples in $CheeseProvenance$
  
@@ -24,6 +28,8 @@ $Location ∩ CheeseProvenance$ is a foreign key in $CheeseProvenance$ referenci
 \tab 120 Tuples for each CheeseProvenance block
 
 \tab $n_{CheeseProvenance} = 1000 \times 120 = 120000 $
+
+\bigskip
 
 We know that, $(\sigma_{climate='dry'} Location) \bowtie CheeseProvenance$ produces the same results as $\sigma_{climate='dry'} (Location \bowtie CheeseProvenance)$
 
