@@ -1,3 +1,19 @@
+{\color{gray}Answer the following questions, on the subject of the invited talk given by engineer Wilson Lucas, that you had the opportunity to attend on the 24th of May 2015.}
+
 	\subsection{}
+	
+{\color{gray}One of the tasks of a DBA is to assure the high availability of the Databases being managed. This can be done in several ways. However, independently of the technique used, there are always trade-offs that one must take into account when choosing how to implement it (or even if it is worth implementing). Name and explain one such trade-off.}
+
+To guarantee data high availablity in a database, it's important to ensure that the information is ready to be accessed fastly and eficiently at any moment.
+
+To ensure such availablity, there are multiple techniques that a database administrator can apply. One of those techniques consists on creating indexes over table columns. Creating indexes can increase a faster access to information. However, the space that an index occupies is considerable compared to the space that a table occupies. It is wise to create indexes only over the needed columns and not for every column, in order to minimize the impact of indexes on disk storage.
+
 	\subsection{}
 
+{\color{gray}In theory, once our database is fully optimized, it should not be necessary to change it any further. In practice, on a database that is being used in a functioning organization, this is not the case. Explain why.}
+
+	In a functioning organization, the way that data is accessed may not be uniform, leading to access data through unsuitable indexes. Altough there are mechanisms to choose a good query plan, it may be slow due to inexistent indexes. The database administrator has the goal to understand what's the best way to access information and act to improve it. A good index today may be worse tomorrow. 
+
+	Another factor to take in account, is that data creation and deletion tends to degrade the access to it, due to internal fragmentation. A good maintenance practice is to recreate indexes over time, so they can occupy less space and be accessed sequentially.
+
+	There is also the necessity do backup databases in order to decrease or prevent data loss caused by a failure. The existence of a database administrator is essential in critical situations like this, as data loss could have great costs for an organization.
