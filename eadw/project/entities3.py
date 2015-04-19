@@ -58,7 +58,11 @@ for line in lines:
             ttt =Node("P",N=name)
             graph.create(ttt)
         else:
-            to_url = m[2][len(r_ent):]
+            if r_ent in m[2]:
+                to_url = m[2][len(r_ent):]
+            else:
+                to_url = m[2]
+                
             if to_url not in entities:
                 ttt = entities[to_url] = Node("E",N=to_url)
                 graph.create(ttt)
