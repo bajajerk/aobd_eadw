@@ -109,13 +109,14 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         print fff,"VS",ttt
         
         res = []
-        for record in graph.cypher.execute("MATCH (x:E) WHERE x.N='"+fff+"' MATCH (y:E) WHERE y.N='"+ttt+"' MATCH p = shortestPath(x-[*..10]-y) RETURN p"):
+        for record in graph.cypher.execute("MATCH (x:E) WHERE x.N='"+fff+"' MATCH (y:E) WHERE y.N='"+ttt+"' MATCH p = allShortestPaths(x-[*..20]-y) RETURN p"):
+           one = []
            for row in record:
                for col in row:
-                   res.append(str(col))
-           
-           break 
-            
+                   one.append(str(col))
+           res.append(one)
+           break
+
             
         f = StringIO()   
         f.write(json.dumps(res,indent=4))

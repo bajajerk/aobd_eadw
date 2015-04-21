@@ -1,0 +1,395 @@
+node {
+  diameter: 48px;
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  border-width: 2px;
+  text-color-internal: #FFFFFF;
+  font-size: 10px;
+}
+
+.E{
+   color:red;
+}
+
+relationship {
+  color: #A5ABB6;
+  shaft-width: 1px;
+  font-size: 8px;
+  padding: 3px;
+  text-color-external: #000000;
+  text-color-internal: #FFFFFF;
+  caption: '<type>';
+}
+
+node.http://dbpedia.org/resource/Abel_(disambiguation) {
+  color: #68BDF6;
+  border-color: #5CA8DB;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.Abel, um personagem b\u00EDblico not\u00F3rio de nome Abel. {
+  color: #6DCE9E;
+  border-color: #60B58B;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Alexandre_(given_name) {
+  color: #FF756E;
+  border-color: #E06760;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.Alexandre, o Grande, uma das pessoas not\u00F3rias de nome Alexandre. {
+  color: #DE9BF9;
+  border-color: #BF85D6;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Alberto {
+  color: #FB95AF;
+  border-color: #E0849B;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.Alberto Santos-Dumont, uma das pessoas not\u00F3rias de nome Alberto. {
+  color: #FFD86E;
+  border-color: #EDBA39;
+  text-color-internal: #604A0E;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Latin_America {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://www.w3.org/2001/XMLSchema#double {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Brazil {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/El_Salvador {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Lake_Titicaca {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Ojos_del_Salado {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Argentina {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://www.w3.org/2001/XMLSchema#nonNegativeInteger {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Spanish_language {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Portuguese_language {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/French_language {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Quechuan_languages {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Aymara_language {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Nahuatl {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Mayan_languages {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Guarani_language {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Haitian_Creole {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Papiamento {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Haiti {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Afonso,_Prince_of_Portugal {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Isabella_of_Aragon,_Queen_of_Portugal {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Lisbon {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Portugal {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Santar%C3%A9m,_Portugal {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Hadrian {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Publius_Aelius_Hadrianus_Afer {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Paulina {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Lucius_Aelius {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Antoninus_Pius {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Italica {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Bacoli {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Italy {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Roman_Empire {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Trajan {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.Imperador romano {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.Busto de Adriano, Museus Capitolinos {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Albert_Einstein {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Ulm {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Baden-W%C3%BCrttemberg {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/German_Empire {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Princeton,_New_Jersey {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/New_Jersey {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/United_States {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Aneurysm {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Germany {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Statelessness {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+node.http://dbpedia.org/resource/Switzerland {
+  color: #A5ABB6;
+  border-color: #9AA1AC;
+  text-color-internal: #FFFFFF;
+  caption: '<id>';
+}
+
+

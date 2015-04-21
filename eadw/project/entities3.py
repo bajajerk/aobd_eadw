@@ -1,6 +1,7 @@
 from datetime import datetime
 import re
 import time
+import urllib
 
 from py2neo import Graph
 from py2neo.packages.httpstream import http
@@ -36,16 +37,20 @@ tx = graph.cypher.begin()
 a=0
 p=0
 
-timer = datetime.now().microsecond/1000.0
-
-
+def format(value):
+    value = value.replace("_"," ")
+    try:
+        return urllib.unquote(value).decode('utf8')       
+    except:
+        print value
+    return value
 print "BEGIN"
 
 # create entities
 for line in lines:
     m = re.findall ( '<(.*?)>', line, re.DOTALL)
     if len(m)>0:
-        from_url = m[0][len(r_ent):].replace("_"," ")      
+        from_url = format(m[0][len(r_ent):])       
         toks = m[1].split("/")     
         relation = toks[len(toks)-1]
        
@@ -59,7 +64,8 @@ for line in lines:
         name = re.findall ( regexp, line, re.DOTALL)
         if len(name)>0:
             name = name[0]
-            name = name[1:len(name)-1]
+            name = format(name[1:len(name)-1])       
+
             
             if name not in entities:
                 tx.append(create_query, {"N": name})
@@ -67,9 +73,9 @@ for line in lines:
             ttt = name
         else:
             if r_ent in m[2]:
-                to_url = m[2][len(r_ent):].replace("_"," ")
+                to_url = format(m[2][len(r_ent):])       
             else:
-                to_url = m[2].replace("_"," ")
+                to_url = format(m[2])       
                 
             if to_url not in entities:                
                 tx.append(create_query, {"N": to_url})
@@ -88,9 +94,8 @@ for line in lines:
             tx.commit()
             tx = graph.cypher.begin()
             
-            x = datetime.now().microsecond/1000.0
             perc = p/float(10)
-            print str(perc)+"% [" + str((100/perc)*(x-timer)/(60)) + " min]"
+            print str(perc)+"%"
     
         a+=1
 
