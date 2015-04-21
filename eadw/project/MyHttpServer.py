@@ -109,7 +109,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         print fff,"VS",ttt
         
         res = []
-        for record in graph.cypher.execute("MATCH (beginning {N:'"+fff+"'}), (end {N:'"+ttt+"'}) MATCH p = shortestPath(beginning-[*..10]-end) RETURN p"):
+        for record in graph.cypher.execute("MATCH (x:E) WHERE x.N='"+fff+"' MATCH (y:E) WHERE y.N='"+ttt+"' MATCH p = shortestPath(x-[*..10]-y) RETURN p"):
            for row in record:
                for col in row:
                    res.append(str(col))
