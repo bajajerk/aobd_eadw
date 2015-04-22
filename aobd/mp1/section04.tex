@@ -45,10 +45,10 @@
 	\begin{equation}CheeseProvenance \bowtie_{CheeseProvenance.region-name=Location.region-name} Location\end{equation}
 
 	Worst case:
-	\begin{equation}Cost = (b_r * b_s + b_r) $block transfers$\end{equation}
+	\begin{equation}Cost = (b_r * b_s + b_r) = 2301000 $ block transfers$\end{equation}
 	%  (+ 2 * b_r $seeks$)
 	Best case (if $b_r$ and $b_s$ fits in memory):
-	\begin{equation}Cost = (b_r + b_s) $block transfers$\end{equation}
+	\begin{equation}Cost = (b_r + b_s) = 3300 $ block transfers$\end{equation}
 	% (+ 2 $seeks$)
 	% Database System Concepts, Pag 551
 	
@@ -60,8 +60,8 @@
 	Let:
 
 	\tab $M = 3$ pages
-	\begin{equation}Cost_{merge} = (b_r + b_s) \end{equation}
-	\begin{equation}Cost_{sort} = b_r(2\lceil log_{M-1}(b_r/M) \rceil+1) \end{equation}
-	\begin{equation}Cost = Cost_{sort} + Cost_{merge} \end{equation}	
+	\begin{equation}Cost_{merge} = (b_r + b_s) = 3300 $ block transfers$\end{equation}
+	\begin{equation}Cost_{sort} = b_r(2\lceil log_{M-1}(b_r/M) \rceil+1) = 19000 $ block transfers$ \end{equation}
+	\begin{equation}Cost = Cost_{sort} + Cost_{merge} = 22300 $ block transfers$\end{equation}	
 
 
