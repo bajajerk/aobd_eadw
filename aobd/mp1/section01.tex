@@ -57,11 +57,8 @@ INCLUDE (Proteins, Fat)
 ON [PRIMARY];
 \end{lstlisting}
 
+	The index is non-clustered because the values of Calories column don't affect the order at which the tuples are stored.
 
-
-
-	O índice deve ser non-clustered, pois os valores presentes na coluna Calories não têm critério de ordenação.
-
-
+	By default, SQL Server creates a clustered index over the primary key (cheeseId) and we didn't specified other configuration, that implies any other index must be non-clustered because there must be only one storage order on disk.
 
 

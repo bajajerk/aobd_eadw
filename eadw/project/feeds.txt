@@ -228,3 +228,4 @@ ignore://meteorologia.xl.pt/syndication/?localidade=21
 ignore://meteorologia.xl.pt/syndication/?localidade=22
 ignore://meteorologia.xl.pt/syndication/?localidade=5
 ignore://meteorologia.xl.pt/syndication/?pais=1
+http://feeds.feedburner.com/boomfestival/radio?format=xml

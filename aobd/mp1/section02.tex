@@ -400,7 +400,7 @@
     child {node (b) {\twonode{4}{5}}}  
     child {node (c) {\twonode{6}{7}}}  
   }
-  child {node {\threenode{11}{13}{15}}
+  child {node {\threenode{10}{13}{15}}
     child {node (d) {\twonode{8}{9}}}  
     child {node (e) {\twonode{11}{12}}}  
     child {node (f) {\twonode{13}{14}}}
@@ -416,19 +416,6 @@
 \end{tikzpicture}
 \end{center}
 
-\begin{figure}[H]
-	\begin{center}
-	\begin{subfigure}[b]{0.5\textwidth}
-		\centering
-		\includegraphics[width=\textwidth]{weather.png}
-
-	\end{subfigure}
-	\caption{Average Conditions}
-	\end{center}
-\end{figure}
-
-Dry and clear this evening. Overnight, areas of mist and fog will gradually spread inland from the east, most extensive over northern areas, with only patchy fog further south. A grass frost is possible in the south under clear skies.
-
 
 \textbf{Delete 8 (Flamengo)}
 \begin{center}
@@ -439,7 +426,7 @@ Dry and clear this evening. Overnight, areas of mist and fog will gradually spre
 \tikzstyle{level 2}=[sibling distance=25mm]
 \tikzstyle{level 3}=[sibling distance=5mm]
 
-\node {\onenode{9}} [-]
+\node {\onenode{8}} [-]
   child {node {\twonode{4}{6}}
     child {node (a) {\threenode{1}{2}{3}}}
     child {node (b) {\twonode{4}{5}}}  
@@ -468,13 +455,13 @@ Dry and clear this evening. Overnight, areas of mist and fog will gradually spre
 \tikzstyle{level 2}=[sibling distance=25mm]
 \tikzstyle{level 3}=[sibling distance=5mm]
 
-\node {\onenode{9}} [-]
-  child {node {\onenode{4}}
+\node {\onenode{13}} [-]
+  child {node {\twonode{4}{8}}
     child {node (a) {\threenode{1}{2}{3}}}
     child {node (b) {\threenode{4}{5}{7}}}  
-  }
-  child {node {\twonode{13}{15}}
     child {node (c) {\threenode{9}{11}{12}}}    
+  }
+  child {node {\onenode{15}}
     child {node (d) {\twonode{13}{14}}}
     child {node (e) {\twonode{15}{16}}}
   }
@@ -495,7 +482,7 @@ Dry and clear this evening. Overnight, areas of mist and fog will gradually spre
 \tikzstyle{level 1}=[sibling distance=30mm]
 \tikzstyle{level 2}=[sibling distance=20mm]
 
-\node {\threenode{4}{9}{13} } [-]
+\node {\threenode{4}{8}{13} } [-]
     child {node (a) {\threenode{1}{2}{3}}}
     child {node (b) {\threenode{4}{5}{7}}}  
     child {node (c) {\threenode{9}{11}{12}}}    

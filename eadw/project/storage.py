@@ -39,6 +39,6 @@ for url in feeds:
             if not obj:
                 print "\t",title,"|",date
                 news.insert({"t":title,"d":description,"l":link,"p":date})
-        except AttributeError, e:
+        except:
             print "[ERROR]"
     
