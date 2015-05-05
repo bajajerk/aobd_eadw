@@ -25,8 +25,10 @@ print rp.can_fetch("*", "http://www.ist.utl.pt/newscache/")
 
 already_crawled = Set()
 
-def verticalCrawler(links, words, depth):
+def horizontalCrawler(links,depth):
     if depth < 3:
+
+        new_links = Set()
         
         for link in links:
             if link not in already_crawled:
@@ -35,29 +37,23 @@ def verticalCrawler(links, words, depth):
                 try:
                     site = urlopen(link)
                     content = site.read()
-                    links = extractUrls(link,content)
                     site.close()
                     already_crawled.add(link)
-
-
-                    count = 0
-                    for word in words:
-                        if word in content:
-                            count += 1
                     
-                    if float(count)/len(words) > 2.0/3.0:
-                        print "MATCH", str(depth),link
-                        new_links =extractUrls(link,content)
-                        verticalCrawler(new_links,words,depth+1)
-                    else:
-                        print "NO", str(depth), link
+                    file_ = open(link[7:].replace("/","_").replace(".","_")+".html", 'w')
+                    file_.write(content)
+                    file_.close()
+                    print "SAVED",depth,"/",str(len(links)), link
                     
-                        
-                    
-    
-                except:
-                    print "ERROR"
-                    
+                    temp_links =extractUrls(link,content)
+                    for temp_link in temp_links:
+                        if temp_link not in already_crawled and temp_link not in new_links:
+                            new_links.add(temp_link)
                     
                 
-verticalCrawler(["http://www.ist.utl.pt"],"Candidatos Alunos Docentes Pessoal".split(),0)
+                except:
+                    print "ERROR"
+        horizontalCrawler(list(new_links),depth+1)         
+                
+
+horizontalCrawler(["http://www.ist.utl.pt"],0)
