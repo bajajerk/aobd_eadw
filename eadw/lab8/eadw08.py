@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 # -*- coding: utf8 -*-
 import nltk
+from _snack import label
 
 
 
@@ -29,15 +30,11 @@ for line in lines:
     sentences = nltk.sent_tokenize(document)
     entities = set()
     
-    for s in sentences:
-        words = nltk.word_tokenize(s)
-        #print words
-      
-        tags = nltk.pos_tag(words)
-        for tag in tags:
-            if tag[1] == "NNP":
-                entities.add(tag[0])
-                
+    chunks = [nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(s)), binary=True) for s in sentences]
+    for chunk in chunks:
+        for subtree in chunk.subtrees():            
+            if subtree.label() == "NE":
+                entities.add(subtree[0][0])  
     print id,list(entities)
 
 file.close()
