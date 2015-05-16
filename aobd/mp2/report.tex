@@ -1,0 +1,75 @@
+\documentclass[11pt,report]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[fleqn]{amsmath}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{makeidx}
+\usepackage{blindtext}
+\usepackage[table]{xcolor}% http://ctan.org/pkg/xcolor
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{subcaption}
+\usepackage[hmargin=3cm,vmargin=3.5cm]{geometry}
+\usepackage{indentfirst}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\usepackage{eurosym}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{trees,arrows,calc}
+\usetikzlibrary{shapes}
+
+\lstset{frame=tb,
+  language=SQL,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+
+\usepackage{titlesec}
+\titleformat{\section}{\hrule \large\bfseries}{\thesection}{1em}{}
+\newcommand{\tab}{\hspace*{3em}}
+
+
+\title{	Database Administration and Tuning \\ Mini-Project 2 - Report}
+\author{
+	Henrique Rocha - 68621 \\
+	Ludijor Barros - 68626 \\
+	Fábio Martins - 71073
+}
+
+\date{\today}
+\begin{document}
+
+	\maketitle
+\section{Transaction Isolation Levels}
+\input{section01.tex}
+\section{Concurrency Control}
+\input{section02.tex}
+\section{Recovery System}
+\input{section03.tex}
+\section{Schema and Index Tuning}
+\input{section04.tex}
+\section{Query Tuning}
+\input{section05.tex}	
+\section{Database Tuning}
+\input{section06.tex}
+\end{document}

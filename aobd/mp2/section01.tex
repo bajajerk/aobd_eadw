@@ -1,0 +1,33 @@
+{\color{gray}Consider a relational database for information related to cheese products, with the following tables:
+
+\tab CHEESE( cheeseID, type, producer, calories, proteins )
+
+\tab REGION( regionID, name, country)
+
+\tab PRODUCTION ( productionID, cheeseID, season, amount )
+
+\tab PROVENANCE ( productionID, regionID )
+
+Assume that the following three stored procedures can run concurrently in a given application that is supported by the relational database:
+\begin{enumerate}
+
+	\item \textbf{insert\_cheese}: creates new records in the CHEESE table, for new cheeses that are produced. This procedure uses only the CHEESE table.
+
+	\item \textbf{update\_production}: inserts new records, or modifies existing PRODUCTION and PROVENANCE records. This procedure writes to the PRODUCTION and PROVENANCE tables, updates the tuples in the PROVENANCE table, and may be reading from the REGION and CHEESE tables.
+
+	\item \textbf{delete\_region}: deletes a given region from the REGION table.
+
+\end{enumerate}
+}
+
+\subsection{}
+{\color{gray}Give a scenario that leads to a possible dirty read in the concurrent execution of operations from this group of stored procedures, or explain why a dirty read cannot happen in this group of stored procedures.}
+
+\subsection{}
+{\color{gray}Give a scenario that leads to a possible non-repeatable read in the concurrent execution of operations from this group of stored procedures, or explain why a non-repeatable read cannot happen in this group of stored procedures.}
+
+\subsection{}
+{\color{gray}Give an example of a possible overwriting of uncommitted data in the concurrent execution of operations from this group of stored procedures, or explain why a phantom read cannot happen in this group of stored procedures.}
+
+\subsection{}
+{\color{gray}Indicate what transaction isolation level would you use for executing each of the three procedures above, and why? For each procedure you should use the least restricted transaction isolation level that ensures correctness.}
