@@ -49,5 +49,15 @@ The second time the REGION tuple is read, it doesn't exists, leading to  a non-r
 \subsection{}
 {\color{gray}Give an example of a possible overwriting of uncommitted data in the concurrent execution of operations from this group of stored procedures, or explain why a phantom read cannot happen in this group of stored procedures.}
 
+Consider two transactions both using \textbf{update\_production} stored procedure over the same PRODUCTION tuples.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.35\textwidth]{overwrite_uncommit.png}
+	\caption{An example overwriting of uncommitted data}
+\end{figure}
+
+T2 commits and T1 PRODUCTION tuple value is lost. 
+
 \subsection{}
 {\color{gray}Indicate what transaction isolation level would you use for executing each of the three procedures above, and why? For each procedure you should use the least restricted transaction isolation level that ensures correctness.}
