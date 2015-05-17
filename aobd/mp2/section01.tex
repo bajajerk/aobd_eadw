@@ -27,7 +27,7 @@ Consider two transactions both using \textbf{update\_production} stored procedur
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth]{dirty_read.png}
+	\includegraphics[width=0.35\textwidth]{dirty_read.png}
 	\caption{An example of dirty read}
 \end{figure}
 
@@ -35,6 +35,16 @@ T2 commits and T1 aborts after, rolling back its changes, the PRODUCTION tuples 
 
 \subsection{}
 {\color{gray}Give a scenario that leads to a possible non-repeatable read in the concurrent execution of operations from this group of stored procedures, or explain why a non-repeatable read cannot happen in this group of stored procedures.}
+
+Consider that transaction one executes two \textbf{update\_production} stored procedures over the same REGION tuple, the second transaction deletes this REGION tuple.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.35\textwidth]{unrepeatable_read.png}
+	\caption{An example a non-repeatable read}
+\end{figure}
+
+The second time the REGION tuple is read, it doesn't exists, leading to  a non-repeatable read.
 
 \subsection{}
 {\color{gray}Give an example of a possible overwriting of uncommitted data in the concurrent execution of operations from this group of stored procedures, or explain why a phantom read cannot happen in this group of stored procedures.}
