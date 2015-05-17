@@ -1,12 +1,12 @@
 {\color{gray}Consider a relational database for information related to cheese products, with the following tables:
 
-\tab CHEESE( cheeseID, type, producer, calories, proteins )
+\tab CHEESE( \underline{cheeseID}, type, producer, calories, proteins )
 
-\tab REGION( regionID, name, country)
+\tab REGION( \underline{regionID}, name, country)
 
-\tab PRODUCTION ( productionID, cheeseID, season, amount )
+\tab PRODUCTION ( \underline{productionID}, cheeseID, season, amount )
 
-\tab PROVENANCE ( productionID, regionID )
+\tab PROVENANCE ( \underline{productionID, regionID} )
 
 Assume that the following three stored procedures can run concurrently in a given application that is supported by the relational database:
 \begin{enumerate}
@@ -22,6 +22,16 @@ Assume that the following three stored procedures can run concurrently in a give
 
 \subsection{}
 {\color{gray}Give a scenario that leads to a possible dirty read in the concurrent execution of operations from this group of stored procedures, or explain why a dirty read cannot happen in this group of stored procedures.}
+
+Consider two transactions both using \textbf{update\_production} stored procedure over the same PRODUCTION tuples.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{dirty_read.png}
+	\caption{An example of dirty read}
+\end{figure}
+
+T2 commits and T1 aborts after, rolling back its changes, the PRODUCTION tuples that T2 read from T1 are dirty reads because they reflect changes of an aborted transaction (T1). 
 
 \subsection{}
 {\color{gray}Give a scenario that leads to a possible non-repeatable read in the concurrent execution of operations from this group of stored procedures, or explain why a non-repeatable read cannot happen in this group of stored procedures.}
