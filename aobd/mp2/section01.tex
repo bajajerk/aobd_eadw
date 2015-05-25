@@ -61,3 +61,14 @@ T2 commits and T1 PRODUCTION tuple value is lost.
 
 \subsection{}
 {\color{gray}Indicate what transaction isolation level would you use for executing each of the three procedures above, and why? For each procedure you should use the least restricted transaction isolation level that ensures correctness.}
+
+
+\begin{enumerate}
+
+	\item \textbf{insert\_cheese}: read uncommited, because one either serializable or not, if two transactions insert the same cheese, one of them must fail with a violation of the primary key constraint.
+
+	\item \textbf{update\_production}: repeatable read, if a read over the same PRODUCTION or PROVENANCE tuples occurs, the second transaction should wait for the first to commit.
+
+	\item \textbf{delete\_region}: read commited, because if an update\_production is happening the delete should wait for it to commit (update\_production has read a region)
+
+\end{enumerate}
