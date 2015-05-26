@@ -23,6 +23,22 @@
 {\color{gray}Show the contents of the log, the dirty page table, and the active transactions table after (a) the analysis phase, (b) the redo phase, and (c) the undo phase.}
 
 \subsection{Analysis Phase}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{LSN}           & \multicolumn{1}{c|}{\textbf{Type}} & \textbf{Transaction}  & \textbf{Page}         \\ \hline
+50                     & Commit                             & T1                    &                       \\ \hline
+60                     & Update                             & T3                    & P3                    \\ \hline
+70                     & Commit                             & T2                    & -                     \\ \hline
+80                     & Update                             & T3                    & P2                    \\ \hline
+90                     & Update                             & T3                    & P5                    \\ \hline
+\end{tabular}
+\caption{Log}
+\end{table}
+
+
 \begin{table}[H]
     \begin{minipage}{.5\linewidth}
       \centering
@@ -33,7 +49,7 @@
 		               &          \\ \cline{1-2}
 		               &          \\ \cline{1-2}
 		\end{tabular}
-      \caption{Transaction Table}
+      \caption{Active Transactions Table}
 
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
@@ -45,13 +61,25 @@
 		P5      & 90           \\ \cline{1-2}
 		        &              \\ \cline{1-2}
 		\end{tabular}
-        \caption{Dirty Page Table}
+        \caption{Dirty Pages Table}
 
     \end{minipage} 
 \end{table}
 
 
 \subsection{Redo Phase}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{LSN}           & \multicolumn{1}{c|}{\textbf{Type}} & \textbf{Transaction}  & \textbf{Page}         \\ \hline
+50                     & Commit                             & T1                    &                       \\ \hline
+60                     & Update                             & T3                    & P3                    \\ \hline
+\end{tabular}
+\caption{Log}
+\end{table}
+
 \begin{table}[H]
     \begin{minipage}{.5\linewidth}
       \centering
@@ -62,7 +90,7 @@
 		               &          \\ \cline{1-2}
 		               &          \\ \cline{1-2}
 		\end{tabular}
-      \caption{Transaction Table}
+      \caption{Active Transactions Table}
 
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
@@ -74,12 +102,24 @@
 		        &              \\ \cline{1-2}
 		        &              \\ \cline{1-2}
 		\end{tabular}
-        \caption{Dirty Page Table}
+        \caption{Dirty Pages Table}
 
     \end{minipage} 
 \end{table}
 
 \subsection{Undo Phase}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{LSN}           & \multicolumn{1}{c|}{\textbf{Type}} & \textbf{Transaction}  & \textbf{Page}         \\ \hline
+50                     & Commit                             & T1                    &                       \\ \hline
+60                     & Update                             & T3                    & P3                    \\ \hline
+\end{tabular}
+\caption{Log}
+\end{table}
+
 \begin{table}[H]
     \begin{minipage}{.5\linewidth}
       \centering
@@ -90,7 +130,7 @@
 		               &          \\ \cline{1-2}
 		               &          \\ \cline{1-2}
 		\end{tabular}
-      \caption{Transaction Table}
+      \caption{Active Transactions Table}
 
     \end{minipage}%
     \begin{minipage}{.5\linewidth}
@@ -102,7 +142,7 @@
 		        &              \\ \cline{1-2}
 		        &              \\ \cline{1-2}
 		\end{tabular}
-        \caption{Dirty Page Table}
+        \caption{Dirty Pages Table}
 
     \end{minipage} 
 \end{table}

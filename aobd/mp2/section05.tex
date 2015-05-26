@@ -1,0 +1,54 @@
+{\color{gray} For each of the following queries, identify one possible reason why an optimizer might not find a good
+execution plan. Rewrite the query so that a good plan is likely to be found. Any available indexes, or known
+constraints, are listed before each query.}
+
+{\color{gray}\subsection{} An index is available on the calories attribute:}
+
+\begin{lstlisting}
+SELECT type
+FROM CHEESE
+WHERE calories * 100 < 800
+\end{lstlisting}
+
+The optimizer might not find a good execution plan because the index over calories times 100 might not exist, a good solution is to divide 800 by 100.
+
+\begin{lstlisting}
+SELECT type
+FROM CHEESE
+WHERE calories < 8
+\end{lstlisting}
+
+It is important that the index is a b+ tree so the search for cheeses with calories lower then 8 is sequential after the first tree traversal.
+
+{\color{gray}\subsection{} An index is available on the calories attribute:}
+
+\begin{lstlisting}
+SELECT type
+FROM CHEESE
+WHERE calories<90 AND calories>40
+\end{lstlisting}
+
+{\color{gray}\subsection{} A B+ Tree index is available on the calories attribute:}
+
+\begin{lstlisting}
+SELECT type
+FROM CHEESE
+WHERE calories=90 OR calories=40
+\end{lstlisting}
+
+{\color{gray}\subsection{} No index is available:}
+
+\begin{lstlisting}
+SELECT DISTINCT CheeseId, type
+FROM CHEESE 
+\end{lstlisting}
+
+{\color{gray}\subsection{} No index is available:}
+
+\begin{lstlisting}
+SELECT AVG (proteins)
+FROM CHEESE
+GROUP BY producer
+HAVING type = "Alverca"
+\end{lstlisting}
+
