@@ -1,0 +1,101 @@
+\subsection{}
+
+{	\color{gray}
+Consider the following schedule for three concurrent transactions:
+}
+{
+	\color{gray}
+	\begin{table}[H]
+\centering
+{\color{gray}
+	\begin{tabular}{l|l|l|l|}
+	\cline{2-4}
+		                    & T1       & T2       & T3       \\ \hline
+	\multicolumn{1}{|l|}{1} & write(A) &          &          \\ \hline
+	\multicolumn{1}{|l|}{2} &          &          & write(B) \\ \hline
+	\multicolumn{1}{|l|}{3} &          & write(A) &          \\ \hline
+	\multicolumn{1}{|l|}{4} & write(B) &          &          \\ \hline
+	\multicolumn{1}{|l|}{5} &          & write(B) &          \\ \hline
+	\end{tabular}
+}
+	\end{table}
+
+}
+
+\subsubsection{}
+{\color{gray}Is the schedule allowed in Strict 2-Phase Locking? Justify.}
+\begin{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node] (1) {$T_1$};
+  \node[main node] (2) [right of=1] {$T_2$};
+  \node[main node] (3) [right of=2] {$T_3$};
+
+
+  \path[every node/.style={font=\sffamily\small}]
+    (2) edge [bend left] node[below] {3} (1)
+    (2) edge [bend right] node[below] {5} (3)
+    (1) edge [bend left] node {4} (3);
+\end{tikzpicture}
+\end{center}
+	
+	Yes, strict 2-Phase Locking allows only schedules whose precedence graph is acyclic, in this case the graph is acyclic.
+
+\subsubsection{}
+
+{\color{gray}Is the schedule allowed by the timestamp-based protocol? Justify.}
+
+TS($T_1$)=1
+
+TS($T_2$)=3
+
+TS($T_3$)=2
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c|}
+\cline{2-5}
+                        & \multicolumn{2}{c|}{A} & \multicolumn{2}{c|}{B} \\ \hline
+\multicolumn{1}{|c|}{t} & Rts(A)    & Wts(A)   & Rts(B)    & Wts(B)   \\ \hline
+\multicolumn{1}{|c|}{1} & 0          & 1         & 0          & 0         \\ \hline
+\multicolumn{1}{|c|}{2} & 0          & 1         & 0          & 2         \\ \hline
+\multicolumn{1}{|c|}{3} & 0          & 3         & 0          & 2         \\ \hline
+\multicolumn{1}{|c|}{4} &            &           &            &           \\ \hline
+\multicolumn{1}{|c|}{5} &            &           &            &           \\ \hline
+\end{tabular}
+\end{table}
+
+No, at $t=4$ transaction $T_1$ issues \textbf{write}(B), $[ TS(T_1)=1 ] < [ Wts(B) = 2 ]$, which means that $T_1$ is attempting to write an obsolete value of B, hence this write operation is rejected, $T_1$ is rolled back. 
+
+
+\subsection{}
+{\color{gray}Consider the following schedule for two concurrent transactions:}
+
+\begin{table}[h]
+\centering
+{\color{gray}
+\begin{tabular}{|c|c|c|}
+\hline
+  & T1        & T2        \\ \hline
+1 & lock-S(A) &           \\ \hline
+2 & read(A)   &           \\ \hline
+3 & unlock(A) &           \\ \hline
+4 &           & lock-X(B) \\ \hline
+5 &           & write(B)  \\ \hline
+6 &           & unlock(B) \\ \hline
+7 & lock-S(B) &           \\ \hline
+8 & read(B)   &           \\ \hline
+9 & unlock(B) &           \\ \hline
+\end{tabular}
+}
+\end{table}
+
+\subsubsection{}
+{\color{gray}Is the schedule allowed in Strict 2-Phase Locking? Justify.}
+
+{\color{red}XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+\subsubsection{}
+{\color{gray}Is the schedule allowed by the timestamp-based protocol? Justify.}
+
+{\color{red}XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}

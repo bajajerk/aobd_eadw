@@ -1,0 +1,42 @@
+{\color{gray}
+Consider the relation CHEESE from Question 1. For each cheese, the relation lists an id, a name, a number of calories, and a number of proteins:
+
+CHEESE( cheeseID, Type, Producer, Calories, Proteins )
+
+The following two queries are extremely important and frequent:
+
+Q1) Finding the average number of calories by cheese type, for all cheeses.
+
+Q2) Listing the cheese ids of the cheeses with most proteins.
+}
+
+
+\subsection{}
+{\color{gray}Write the two queries in SQL.}
+\subsubsection{}
+\begin{lstlisting}[frame=single]
+SELECT Type, AVG(Calories)
+FROM CHEESE
+GROUP BY Type;
+\end{lstlisting}
+
+\subsubsection{}
+\begin{lstlisting}[frame=single]
+SELECT cheeseID, Proteins
+FROM CHEESE
+ORDER BY Proteins
+\end{lstlisting}
+
+\subsection{}
+{\color{gray}Suppose you have a heap file to store the records. What indexes would you create to speed up the two queries above? Justify.}
+\subsubsection{}
+For the first query we would create a non-clustered index over "Type" with Calories as additional attribute, because retrieving the grouping columns directly from an index is the most efficient way to process a "GROUP BY" (Loose Index Scan), the reason for adding Calories as additional attribute is to prevent finding the CHEESE tuple itself, obtaining the result directly from the index. 
+\subsubsection{}
+For the second query we would create a non-clustered index over "Proteins" because if the index is B+ tree then we don't need to perform the sort operation.
+\subsection{}
+{\color{gray}Suppose your customers complain that performance is not satisfactory. If you consider a schema redesign as a tuning option, explain how you would try to obtain better performance by describing the schema for the relation(s) that you would use and your choice of file organizations and indexes on these relations.}
+\subsubsection{}
+We would create a special table, also known as materialized view, with pre-computed sum of Calories and eventual triggers to update this new special table.
+\subsubsection{}
+We would create another materialized view, without the extra Type, Producer, Calories attributes. The second query would process less amount of data.
+

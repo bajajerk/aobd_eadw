@@ -1,0 +1,33 @@
+{\color{gray} Consider the following two queries:}
+\begin{lstlisting}[frame=single]
+Q1: 	SELECT type, producer
+	FROM CHEESE NATURAL JOIN PRODUCTION NATURAL JOIN PROVENANCE NATURAL JOIN REGION
+	WHERE country = 'Portugal' AND amount > 10,000 AND season = 'Winter'
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single]
+Q2: 	SELECT type, COUNT(*)
+	FROM CHEESE
+	GROUP BY type;
+\end{lstlisting}
+
+\subsection{}
+{\color{gray}Which of these queries corresponds to a typical access pattern of OLTP applications? And which one corresponds to a typical access pattern of OLAP queries? Justify your answer.}
+
+	OLAP applications typically involves agreggations and complex queries which is the case of Query 1. 
+
+	OLTP applications typically involves simple queries that returns relatively few records, which is the case of Query 2.
+
+\subsection{}
+{\color{gray}In which of the queries would it make sense to use a low isolation level (e.g. READ UNCOMMITED)? And a higher isolation level (e.g. SERIALIZABLE)? Justify your answer.}
+
+The first query does natural joins between four tables which is an indicator that this query should use an high isolation level such as SERIALIZABLE.
+
+On the other hand, the second query does a simple group by "Type" and changes to this table would produce just different counts, this type of query could require a lower isolation level.
+
+\subsection{}
+{\color{gray} Consider the different tuning levels considered in the lectures (schema, index, queries, etc). For the first query, indicate two possible optimizations at two different levels.}
+
+Queries formadas a partir de varios natural joins, criam tabelas com um tamanho enorme o que torna as pesquisas mais caras e lentas. Uma forma de otimizar este problema é criar diferentes tabelas temporários com os dados necessários para responder às condições desejadas, por exemplo, a criação de uma query temporária sobre a tabela que responda à condição "WHERE country = 'Portugal'", outra em relação à tabela que responde à condição "WHERE amount > 1000" e por ultimo uma sobre a tabela que responde à condição "WHERE season = 'Winter'".
+
+Após esta otimização é ainda possível criar um indice sobre os atributos desejados, "country", "amount" e "season" de forma a acelerar as pesquisas. 

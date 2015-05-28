@@ -28,6 +28,8 @@ FROM CHEESE
 WHERE calories<90 AND calories>40
 \end{lstlisting}
 
+{\color{red}XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}\footnote{BETWEEN}
+
 {\color{gray}\subsection{} A B+ Tree index is available on the calories attribute:}
 
 \begin{lstlisting}
@@ -36,10 +38,25 @@ FROM CHEESE
 WHERE calories=90 OR calories=40
 \end{lstlisting}
 
+The  optimizer  will  not  consider  the  index  on  age  as  it  is  misled  by  the  OR predicate. To make it consider the index we can use UNION instead or an OR.
+
+\begin{lstlisting}
+SELECT type	FROM CHEESE	WHERE calories=90
+UNION
+SELECT type	FROM CHEESE	WHERE calories=40
+\end{lstlisting}
+
 {\color{gray}\subsection{} No index is available:}
 
 \begin{lstlisting}
 SELECT DISTINCT CheeseId, type
+FROM CHEESE 
+\end{lstlisting}
+
+Tuples containing the primary key will be by default unique, so the distinct operation is needless. 
+
+\begin{lstlisting}
+SELECT CheeseId, type
 FROM CHEESE 
 \end{lstlisting}
 
@@ -51,4 +68,14 @@ FROM CHEESE
 GROUP BY producer
 HAVING type = "Alverca"
 \end{lstlisting}
+
+By grouping cheeses by producer and filtering by type only after, most of groups with type "Alverca" will be discarded, to improve the performance of this query, the filter condition by type should be first in order to the group operation process less tuples, in this case the filter condition is applied to tuples instead of groups so the HAVING condition is swapped by WHERE condition.
+
+\begin{lstlisting}
+SELECT AVG (proteins)
+FROM CHEESE
+WHERE type = "Alverca"
+GROUP BY producer
+\end{lstlisting}
+
 
